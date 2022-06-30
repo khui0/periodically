@@ -82,6 +82,7 @@ button:hover {
 	flex-direction: column;
 	gap: 10px;
 	overflow: auto;
+	border-radius: 8px;
 }
 
 .card {
