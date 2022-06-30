@@ -1,10 +1,19 @@
 const status = document.getElementById("status");
 const feed = document.getElementById("feed");
 
-document.getElementById("new").addEventListener("click", () => {
-    document.getElementById("create").showModal();
-    createTask("test", "due sometime lmao", "insert details here insert details here insert details here insert details here");
-});
+var data = {};
+
+document.querySelectorAll("[data-open]").forEach(item => {
+    item.addEventListener("click", e => {
+        document.getElementById(item.getAttribute("data-open")).showModal();
+    })
+})
+
+document.querySelectorAll("[data-close]").forEach(item => {
+    item.addEventListener("click", e => {
+        document.getElementById(item.getAttribute("data-close")).close();
+    })
+})
 
 function createTask(title, date, details) {
     feed.innerHTML += `<div class="card" id="${title}">
@@ -17,3 +26,10 @@ function createTask(title, date, details) {
         </div>
     </div>`;
 }
+// createTask("test", "due sometime lmao", "insert details here insert details here insert details here insert details here");
+let uuid = uuidv4();
+data[uuid] = {};
+data[uuid].title = "test title";
+data[uuid].due = Date.now();
+data[uuid].details = "test details";
+console.log(data);
