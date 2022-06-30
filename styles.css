@@ -96,11 +96,38 @@ button:hover {
 	user-select: text;
 }
 
-.card button {
+dialog {
+	color: var(--text-color);
+	background-color: var(--surface-color);
+	border: none;
+	border-radius: 8px;
+	width: min(80%, 500px);
+	padding: 20px;
+}
+
+.card button,
+dialog button {
 	margin-top: 5px;
 	background-color: var(--control-color);
 }
 
-.card button:hover {
+.card button:hover,
+dialog button:hover {
 	background-color: var(--accent-color);
+}
+
+input,
+textarea {
+	color: inherit;
+	background-color: var(--control-color);
+	border: none;
+	border-radius: 8px;
+	font: inherit;
+}
+
+textarea {
+	resize: none;
+	width: 100%;
+	height: 200px;
+	box-sizing: border-box;
 }

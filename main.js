@@ -2,7 +2,8 @@ const status = document.getElementById("status");
 const feed = document.getElementById("feed");
 
 document.getElementById("new").addEventListener("click", () => {
-    createTask("test","due sometime lmao", "insert details here insert details here insert details here insert details here");
+    document.getElementById("create").showModal();
+    createTask("test", "due sometime lmao", "insert details here insert details here insert details here insert details here");
 });
 
 function createTask(title, date, details) {
@@ -11,9 +12,8 @@ function createTask(title, date, details) {
         <p>${date}</p>
         <p>${details}</p>
         <div class="button-cluster">
-            <button>Mark as complete</button>
             <button>Edit</button>
-            <button>Delete</button>
+            <button>Finished</button>
         </div>
     </div>`;
 }
