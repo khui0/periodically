@@ -129,6 +129,8 @@ dialog {
 	border-radius: 8px;
 	color: var(--text-color);
 	background-color: var(--surface-color);
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .card button,
