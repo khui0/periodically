@@ -42,15 +42,41 @@ p {
 	margin: 0;
 }
 
-.split-container {
+button {
+	height: 2.5em;
+	margin: 0;
+	padding: 0 1em;
+	border: none;
+	border-radius: 8px;
+	color: var(--text-color);
+	background-color: var(--surface-color);
+	font: inherit;
+}
+
+button:hover {
+	color: var(--surface-color);
+	background-color: var(--text-color);
+}
+
+.header {
+	flex: 0 0 auto;
+	flex-wrap: wrap;
 	display: flex;
-	gap: 20px;
-	height: 100%;
+	justify-content: space-between;
 	overflow: hidden;
 }
 
-.split-container>div {
-	flex: 1;
+.header button {
+	height: 3em;
+}
+
+.button-cluster {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
+.feed {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
@@ -58,9 +84,20 @@ p {
 }
 
 .card {
-	height: 200px;
-	background-color: var(--surface-color);
 	flex: 0 0 auto;
+	height: fit-content;
+	overflow: auto;
 	padding: 10px;
 	border-radius: 8px;
+	background-color: var(--surface-color);
+}
+
+.card button {
+	margin-top: 5px;
+	background-color: var(--control-color);
+}
+
+.card button:hover {
+	color: var(--text-color);
+	background-color: var(--accent-color);
 }
