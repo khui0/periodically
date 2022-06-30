@@ -11,9 +11,10 @@ else {
     for (const uuid in data) {
         createTask(uuid, data[uuid].title, new Date(data[uuid].timestamp).toLocaleString(), data[uuid].details);
     }
+    updateStatus();
 }
-// localStorage.clear();
 
+updateStatus();
 resetTaskModal();
 
 document.querySelectorAll("[data-open]").forEach(item => {
@@ -37,12 +38,18 @@ document.getElementById("task-submit").addEventListener("click", () => {
     if (title?.trim() && date?.trim() && details?.trim()) {
         let uuid = uuidv4();
         createTask(uuid, title, new Date(timestamp).toLocaleString(), details);
-        saveTask(uuid, title, timestamp, details)
+        saveTask(uuid, title, timestamp, details);
+        updateStatus();
         resetTaskModal();
     }
     else {
         alert("Fields cannot be left blank");
     }
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+    localStorage.clear();
+
 });
 
 function createTask(uuid, title, date, details) {
@@ -71,6 +78,7 @@ function addButtonClick() {
             document.getElementById(uuid).remove();
             delete data[uuid];
             localStorage.setItem("data", JSON.stringify(data));
+            updateStatus();
         });
     });
 }
@@ -98,9 +106,12 @@ function resetTaskModal() {
     document.getElementById("task-details").value = "";
 }
 
-// let uuid = uuidv4();
-// data[uuid] = {};
-// data[uuid].title = "test title";
-// data[uuid].due = Date.now();
-// data[uuid].details = "test details";
-// console.log(data);
+function updateStatus() {
+    let amount = Object.keys(data).length;
+    if (amount == 1) {
+        document.getElementById("status").textContent = `${amount} thing left to do`;
+    }
+    else {
+        document.getElementById("status").textContent = `${amount} things left to do`;
+    }
+}

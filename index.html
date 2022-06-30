@@ -16,7 +16,7 @@
 
 <body>
 	<div class="header">
-		<h1 id="status">∞ things left to do</h1>
+		<h1 id="status"></h1>
 		<div class="button-cluster">
 			<button data-open="task">New task</button>
 			<button data-open="settings">Settings</button>
@@ -28,7 +28,7 @@
 	<dialog id="task">
 		<h2>New task</h2>
 		<p>Title:</p>
-		<input type="text" id="task-title">
+		<input type="text" autocomplete="off" id="task-title">
 		<p>Due date:</p>
 		<input type="datetime-local" id="task-date">
 		<p>Details:</p>
@@ -40,7 +40,7 @@
 	</dialog>
 	<dialog id="settings">
 		<h2>Settings</h2>
-		<p>Work in progress</p>
+		<button id="reset">Reset stored tasks</button>
 		<div class="button-cluster">
 			<button data-close="settings">Close</button>
 		</div>
