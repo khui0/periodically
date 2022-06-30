@@ -28,14 +28,14 @@
 	<dialog id="task">
 		<h2>New task</h2>
 		<p>Title:</p>
-		<input type="text" id="title-input">
+		<input type="text" id="task-title">
 		<p>Due date:</p>
-		<input type="datetime-local">
+		<input type="datetime-local" id="task-date">
 		<p>Details:</p>
-		<textarea rows="8"></textarea>
+		<textarea rows="8" id="task-details"></textarea>
 		<div class="button-cluster">
 			<button data-close="task">Close</button>
-			<button data-close="task">Create</button>
+			<button id="task-submit">Create</button>
 		</div>
 	</dialog>
 	<dialog id="settings">
