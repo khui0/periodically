@@ -26,10 +26,10 @@ function createTask(title, date, details) {
         </div>
     </div>`;
 }
-// createTask("test", "due sometime lmao", "insert details here insert details here insert details here insert details here");
-let uuid = uuidv4();
-data[uuid] = {};
-data[uuid].title = "test title";
-data[uuid].due = Date.now();
-data[uuid].details = "test details";
-console.log(data);
+
+// let uuid = uuidv4();
+// data[uuid] = {};
+// data[uuid].title = "test title";
+// data[uuid].due = Date.now();
+// data[uuid].details = "test details";
+// console.log(data);

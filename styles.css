@@ -32,6 +32,11 @@ body {
 	background-color: var(--background-color);
 }
 
+:focus {
+	outline: none;
+	filter: brightness(1.1);
+}
+
 h1,
 h2,
 h3,
@@ -40,6 +45,27 @@ h5,
 h6,
 p {
 	margin: 0;
+}
+
+a {
+	color: var(--accent-color);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+input,
+textarea {
+	box-sizing: border-box;
+	width: 100%;
+	resize: none;
+	border: none;
+	border-radius: 8px;
+	color: inherit;
+	background-color: var(--control-color);
+	font: inherit;
 }
 
 button {
@@ -57,20 +83,20 @@ button:hover {
 	background-color: var(--accent-color);
 }
 
-.header {
-	flex: 0 0 auto;
-	flex-wrap: wrap;
-	display: flex;
-	justify-content: space-between;
-	overflow: hidden;
-}
-
 .button-cluster {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 5px;
 	-webkit-user-select: none;
 	user-select: none;
+}
+
+.header {
+	flex: 0 0 auto;
+	flex-wrap: wrap;
+	display: flex;
+	justify-content: space-between;
+	overflow: hidden;
 }
 
 .header button {
@@ -97,12 +123,12 @@ button:hover {
 }
 
 dialog {
-	color: var(--text-color);
-	background-color: var(--surface-color);
-	border: none;
-	border-radius: 8px;
 	width: min(80%, 500px);
 	padding: 20px;
+	border: none;
+	border-radius: 8px;
+	color: var(--text-color);
+	background-color: var(--surface-color);
 }
 
 .card button,
@@ -114,34 +140,4 @@ dialog button {
 .card button:hover,
 dialog button:hover {
 	background-color: var(--accent-color);
-}
-
-input,
-textarea {
-	color: inherit;
-	background-color: var(--control-color);
-	border: none;
-	border-radius: 8px;
-	font: inherit;
-}
-
-textarea {
-	resize: none;
-	width: 100%;
-	height: 200px;
-	box-sizing: border-box;
-}
-
-a {
-	color: var(--accent-color);
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-:focus {
-	outline: none;
-	filter: brightness(1.1);
 }
