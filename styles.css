@@ -54,8 +54,7 @@ button {
 }
 
 button:hover {
-	color: var(--surface-color);
-	background-color: var(--text-color);
+	background-color: var(--accent-color);
 }
 
 .header {
@@ -66,14 +65,16 @@ button:hover {
 	overflow: hidden;
 }
 
-.header button {
-	height: 3em;
-}
-
 .button-cluster {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 5px;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.header button {
+	height: 3em;
 }
 
 .feed {
@@ -90,6 +91,8 @@ button:hover {
 	padding: 10px;
 	border-radius: 8px;
 	background-color: var(--surface-color);
+	-webkit-user-select: text;
+	user-select: text;
 }
 
 .card button {
@@ -98,6 +101,5 @@ button:hover {
 }
 
 .card button:hover {
-	color: var(--text-color);
 	background-color: var(--accent-color);
 }
