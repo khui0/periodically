@@ -3,6 +3,19 @@ const feed = document.getElementById("feed");
 
 var data = {};
 
+if (localStorage.getItem("data") === null) {
+    localStorage.setItem("data", JSON.stringify(data));
+}
+else {
+    data = JSON.parse(localStorage.getItem("data"));
+    for (const uuid in data) {
+        createTask(uuid, data[uuid].title, new Date(data[uuid].timestamp).toLocaleString(), data[uuid].details);
+    }
+}
+// localStorage.clear();
+
+resetTaskModal();
+
 document.querySelectorAll("[data-open]").forEach(item => {
     item.addEventListener("click", () => {
         document.getElementById(item.getAttribute("data-open")).showModal();
@@ -24,11 +37,8 @@ document.getElementById("task-submit").addEventListener("click", () => {
     if (title?.trim() && date?.trim() && details?.trim()) {
         let uuid = uuidv4();
         createTask(uuid, title, new Date(timestamp).toLocaleString(), details);
-        // Close modal and reset inputs
-        document.getElementById("task").close();
-        document.getElementById("task-title").value = "";
-        document.getElementById("task-date").value = "";
-        document.getElementById("task-details").value = "";
+        saveTask(uuid, title, timestamp, details)
+        resetTaskModal();
     }
     else {
         alert("Fields cannot be left blank");
@@ -57,9 +67,35 @@ function addButtonClick() {
     });
     document.querySelectorAll("[data-delete]").forEach(item => {
         item.addEventListener("click", () => {
-            document.getElementById(item.getAttribute("data-delete")).remove();
+            let uuid = item.getAttribute("data-delete");
+            document.getElementById(uuid).remove();
+            delete data[uuid];
+            localStorage.setItem("data", JSON.stringify(data));
         });
     });
+}
+
+function saveTask(uuid, title, timestamp, details) {
+    data[uuid] = {};
+    data[uuid].title = title;
+    data[uuid].timestamp = timestamp;
+    data[uuid].details = details;
+    localStorage.setItem("data", JSON.stringify(data));
+}
+
+function endOfToday() {
+    let date = new Date();
+    let year = date.getFullYear()
+    let month = (date.getMonth() + 1).toString().padStart(2, "0");
+    let day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}T23:59`;
+}
+
+function resetTaskModal() {
+    document.getElementById("task").close();
+    document.getElementById("task-title").value = "";
+    document.getElementById("task-date").value = endOfToday();
+    document.getElementById("task-details").value = "";
 }
 
 // let uuid = uuidv4();
