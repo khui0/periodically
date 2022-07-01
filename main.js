@@ -25,7 +25,13 @@ document.querySelectorAll("[data-open]").forEach(item => {
 
 document.querySelectorAll("[data-close]").forEach(item => {
     item.addEventListener("click", () => {
-        document.getElementById(item.getAttribute("data-close")).close();
+        let id = item.getAttribute("data-close");
+        if (id == "task") {
+            resetTaskModal();
+        }
+        else {
+            document.getElementById(id).close();
+        }
     });
 });
 
@@ -68,8 +74,7 @@ function createTask(uuid, title, date, details) {
 function addButtonClick() {
     document.querySelectorAll("[data-edit]").forEach(item => {
         item.addEventListener("click", () => {
-            let uuid = item.getAttribute("data-edit");
-            console.log("edit task with id: " + uuid);
+            // let uuid = item.getAttribute("data-edit");
         });
     });
     document.querySelectorAll("[data-delete]").forEach(item => {
