@@ -1,21 +1,18 @@
 const status = document.getElementById("status");
 const feed = document.getElementById("feed");
 
-var data = {};
+var data = JSON.parse(localStorage.getItem("data") || "[]");
 
-if (localStorage.getItem("data") === null) {
-    localStorage.setItem("data", JSON.stringify(data));
-}
-else {
-    data = JSON.parse(localStorage.getItem("data"));
-    for (const uuid in data) {
-        createTask(uuid, data[uuid].title, new Date(data[uuid].timestamp).toLocaleString(), data[uuid].details);
-    }
-    updateStatus();
+console.log(data);
+
+for (let i = 0; i < data.length; i++) {
+    createTask(data[i].uuid, data[i].title, new Date(data[i].timestamp).toLocaleString(), data[i].details);
 }
 
 updateStatus();
 resetTaskModal();
+
+setInterval(updatePastDue, 100);
 
 document.querySelectorAll("[data-open]").forEach(item => {
     item.addEventListener("click", () => {
@@ -44,7 +41,7 @@ document.getElementById("task-submit").addEventListener("click", () => {
     if (title?.trim() && date?.trim() && details?.trim()) {
         let uuid = uuidv4();
         createTask(uuid, title, new Date(timestamp).toLocaleString(), details);
-        saveTask(uuid, title, timestamp, details);
+        storeTask(uuid, title, timestamp, details);
         updateStatus();
         resetTaskModal();
     }
@@ -68,10 +65,10 @@ function createTask(uuid, title, date, details) {
             <button data-delete="${uuid}">Finished</button>
         </div>
     </div>`;
-    addButtonClick();
+    addButtonEvents();
 }
 
-function addButtonClick() {
+function addButtonEvents() {
     document.querySelectorAll("[data-edit]").forEach(item => {
         item.addEventListener("click", () => {
             // let uuid = item.getAttribute("data-edit");
@@ -80,19 +77,24 @@ function addButtonClick() {
     document.querySelectorAll("[data-delete]").forEach(item => {
         item.addEventListener("click", () => {
             let uuid = item.getAttribute("data-delete");
+            // Remove item from DOM
             document.getElementById(uuid).remove();
-            delete data[uuid];
+            // Remove item from data
+            data = data.filter(item => item.uuid != uuid);
             localStorage.setItem("data", JSON.stringify(data));
             updateStatus();
         });
     });
 }
 
-function saveTask(uuid, title, timestamp, details) {
-    data[uuid] = {};
-    data[uuid].title = title;
-    data[uuid].timestamp = timestamp;
-    data[uuid].details = details;
+function storeTask(uuid, title, timestamp, details) {
+    let item = {
+        "uuid": uuid,
+        "title": title,
+        "timestamp": timestamp,
+        "details": details
+    };
+    data.push(item);
     localStorage.setItem("data", JSON.stringify(data));
 }
 
@@ -112,11 +114,20 @@ function resetTaskModal() {
 }
 
 function updateStatus() {
-    let amount = Object.keys(data).length;
+    let amount = data.length;
     if (amount == 1) {
         document.getElementById("status").textContent = `${amount} thing left to do`;
     }
     else {
         document.getElementById("status").textContent = `${amount} things left to do`;
+    }
+}
+
+function updatePastDue() {
+    let current = Date.now();
+    for (let i = 0; i < data.length; i++) {
+        if (current > data[i].timestamp) {
+            document.getElementById(data[i].uuid).querySelector("p").style.color = "var(--error-color)";
+        }
     }
 }
