@@ -3,10 +3,7 @@ const feed = document.getElementById("feed");
 
 var data = JSON.parse(localStorage.getItem("data") || "[]");
 
-for (let i = 0; i < data.length; i++) {
-    createTask(data[i].uuid, data[i].title, new Date(data[i].timestamp).toLocaleString(), data[i].details);
-}
-
+updateTasks();
 updateStatus();
 resetTaskModal();
 
@@ -36,10 +33,10 @@ document.getElementById("task-submit").addEventListener("click", () => {
     let details = document.getElementById("task-details").value;
 
     let timestamp = new Date(date).getTime();
-    if (title?.trim() && date?.trim() && details?.trim()) {
+    if (title?.trim() && date?.trim()) {
         let uuid = uuidv4();
-        createTask(uuid, title, new Date(timestamp).toLocaleString(), details);
         storeTask(uuid, title, timestamp, details);
+        updateTasks();
         updateStatus();
         resetTaskModal();
     }
@@ -69,6 +66,7 @@ function addButtonEvents() {
     document.querySelectorAll("[data-edit]").forEach(item => {
         item.addEventListener("click", () => {
             // let uuid = item.getAttribute("data-edit");
+            document.getElementById("task").showModal();
         });
     });
     document.querySelectorAll("[data-delete]").forEach(item => {
@@ -108,6 +106,14 @@ function resetTaskModal() {
     document.getElementById("task-title").value = "";
     document.getElementById("task-date").value = endOfToday();
     document.getElementById("task-details").value = "";
+}
+
+function updateTasks() {
+    feed.innerHTML = "";
+    data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0))
+    for (let i = 0; i < data.length; i++) {
+        createTask(data[i].uuid, data[i].title, new Date(data[i].timestamp).toLocaleString(), data[i].details);
+    }
 }
 
 function updateStatus() {
