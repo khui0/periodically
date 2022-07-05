@@ -136,6 +136,11 @@ dialog {
 	user-select: none;
 }
 
+dialog::backdrop {
+	background-color: black;
+	opacity: 0.5;
+}
+
 .card button,
 dialog button {
 	margin-top: 5px;

@@ -11,21 +11,21 @@ setInterval(updatePastDue, 100);
 
 document.querySelectorAll("[data-open]").forEach(item => {
     item.addEventListener("click", () => {
-        document.getElementById(item.getAttribute("data-open")).showModal();
+        let id = item.getAttribute("data-open");
+        document.getElementById(id).showModal();
+        if (id != "task") {
+            document.getElementById(id).querySelector("button[data-close]").focus();
+        }
     });
 });
 
 document.querySelectorAll("[data-close]").forEach(item => {
     item.addEventListener("click", () => {
-        let id = item.getAttribute("data-close");
-        if (id == "task") {
-            resetTaskModal();
-        }
-        else {
-            document.getElementById(id).close();
-        }
+        document.getElementById(item.getAttribute("data-close")).close();
     });
 });
+
+document.getElementById("task").addEventListener("close", resetTaskModal);
 
 document.getElementById("task-submit").addEventListener("click", () => {
     let title = document.getElementById("task-title").value;
@@ -41,7 +41,7 @@ document.getElementById("task-submit").addEventListener("click", () => {
         resetTaskModal();
     }
     else {
-        alert("Fields cannot be left blank");
+        alert("Title and date seem to be empty 🤔");
     }
 });
 
