@@ -3,8 +3,6 @@ const feed = document.getElementById("feed");
 
 var data = JSON.parse(localStorage.getItem("data") || "[]");
 
-console.log(data);
-
 for (let i = 0; i < data.length; i++) {
     createTask(data[i].uuid, data[i].title, new Date(data[i].timestamp).toLocaleString(), data[i].details);
 }
@@ -52,7 +50,6 @@ document.getElementById("task-submit").addEventListener("click", () => {
 
 document.getElementById("reset").addEventListener("click", () => {
     localStorage.clear();
-
 });
 
 function createTask(uuid, title, date, details) {
