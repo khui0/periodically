@@ -55,7 +55,6 @@ function createTask(uuid, title, date, details) {
         <p>${date}</p>
         <p>${details}</p>
         <div class="button-cluster">
-            <button data-edit="${uuid}">Edit</button>
             <button data-delete="${uuid}">Finished</button>
         </div>
     </div>`;
@@ -63,12 +62,6 @@ function createTask(uuid, title, date, details) {
 }
 
 function addButtonEvents() {
-    document.querySelectorAll("[data-edit]").forEach(item => {
-        item.addEventListener("click", () => {
-            // let uuid = item.getAttribute("data-edit");
-            document.getElementById("task").showModal();
-        });
-    });
     document.querySelectorAll("[data-delete]").forEach(item => {
         item.addEventListener("click", () => {
             let uuid = item.getAttribute("data-delete");
