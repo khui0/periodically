@@ -4,4 +4,4 @@
 
 A simple to-do list built with vanilla JavaScript
 
-Organize the things you've been putting off doing and set due dates for yourself. Tasks are automatically sorted by due date and are saved to localStorage
+Organize the things you've been putting off doing and set due dates for yourself. Tasks are automatically prioritized by due date and are saved to localStorage
