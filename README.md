@@ -1,6 +1,6 @@
 # Periodically
 
-![periodically_large_light](https://user-images.githubusercontent.com/101839505/177427775-74a9dd0b-1f6c-4dc2-9be2-4fa7fc0f7030.png)
+![periodically_large_light](https://user-images.githubusercontent.com/101839505/177592779-4ae7fd6b-1f04-46e5-b48c-ddc15ebaa57c.png)
 
 A simple to-do list built with vanilla JavaScript
 
