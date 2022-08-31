@@ -158,7 +158,7 @@ dialog>.button-cluster {
 
 /* Themes */
 
-.theme-void {
+.theme-abyss {
 	--text-color: #ffffff;
 	--background-color: #000000;
 	--surface-color: #18181a;
@@ -167,20 +167,47 @@ dialog>.button-cluster {
 	--error-color: #f84747;
 }
 
-.theme-winter {
-	--text-color: #0d0d0d;
+.theme-glacier {
+	--text-color: #242424;
 	--background-color: #e5edf1;
-	--surface-color: #cddde5;
-	--control-color: #a9c6d4;
-	--accent-color: #059fff;
+	--surface-color: #d0dee5;
+	--control-color: #b6ccd7;
+	--accent-color: #71a3bc;
 	--error-color: #f84747;
 }
 
 .theme-sage {
-	--text-color: #201910;
+	--text-color: #242424;
 	--background-color: #bacbb0;
 	--surface-color: #a1b794;
 	--control-color: #8aa27c;
 	--accent-color: #5c8a5b;
+	--error-color: #f84747;
+}
+
+.theme-manilla {
+	--text-color: #242424;
+	--background-color: #cbc3af;
+	--surface-color: #b7ac93;
+	--control-color: #a3977c;
+	--accent-color: #917856;
+	--error-color: #f84747;
+}
+
+.theme-rose {
+	--text-color: #242424;
+	--background-color: #F4DBD8;
+	--surface-color: #e0c4c0;
+	--control-color: #c7a8a5;
+	--accent-color: #ae817c;
+	--error-color: #f84747;
+}
+
+.theme-lavender {
+	--text-color: #242424;
+	--background-color: #c3c0e5;
+	--surface-color: #b0acd7;
+	--control-color: #a19bd1;
+	--accent-color: #7e78be;
 	--error-color: #f84747;
 }
