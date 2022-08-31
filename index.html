@@ -46,14 +46,22 @@
 	</dialog>
 	<dialog id="options">
 		<h2>Options</h2>
-		<button id="reset">Reset stored tasks</button>
+		<p>Theme</p>
+		<button data-theme="">Classic</button>
+		<button data-theme="theme-void">Void</button>
+		<button data-theme="theme-winter">Wintery</button>
+		<button data-theme="theme-sage">Sage</button>
+		<p>Storage</p>
+		<button id="reset-tasks">Reset tasks</button>
+		<button id="reset-theme">Reset theme</button>
+		<button id="reset">Reset all</button>
 		<div class="button-cluster">
 			<button data-close="options">Close</button>
 		</div>
 	</dialog>
 	<dialog id="info">
 		<h2>Info</h2>
-		<p>A simple to-do list built with vanilla JavaScript</p>
+		<p>A simple to-do list you can check periodically to stay on top of things</p>
 		<a href="https://github.com/khui0/periodically" target="_blank">GitHub</a>
 		<div class="button-cluster">
 			<button data-close="info">Close</button>

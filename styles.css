@@ -155,3 +155,32 @@ dialog button:hover {
 dialog>.button-cluster {
 	justify-content: right;
 }
+
+/* Themes */
+
+.theme-void {
+	--text-color: #ffffff;
+	--background-color: #000000;
+	--surface-color: #18181a;
+	--control-color: #2c2c30;
+	--accent-color: #059fff;
+	--error-color: #f84747;
+}
+
+.theme-winter {
+	--text-color: #0d0d0d;
+	--background-color: #e5edf1;
+	--surface-color: #cddde5;
+	--control-color: #a9c6d4;
+	--accent-color: #059fff;
+	--error-color: #f84747;
+}
+
+.theme-sage {
+	--text-color: #201910;
+	--background-color: #bacbb0;
+	--surface-color: #a1b794;
+	--control-color: #90a882;
+	--accent-color: #5f975e;
+	--error-color: #f84747;
+}

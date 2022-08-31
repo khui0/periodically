@@ -3,11 +3,21 @@ const feed = document.getElementById("feed");
 
 var data = JSON.parse(localStorage.getItem("data") || "[]");
 
+document.body.className = localStorage.getItem("theme") || "";
+
 updateTasks();
 updateStatus();
 resetTaskModal();
 
 setInterval(updatePastDue, 100);
+
+document.querySelectorAll("[data-theme]").forEach(item => {
+    item.addEventListener("click", () => {
+        let value = item.getAttribute("data-theme");
+        document.body.className = value;
+        localStorage.setItem("theme", value);
+    });
+});
 
 document.querySelectorAll("[data-open]").forEach(item => {
     item.addEventListener("click", () => {
@@ -45,8 +55,20 @@ document.getElementById("task-submit").addEventListener("click", () => {
     }
 });
 
+document.getElementById("reset-tasks").addEventListener("click", () => {
+    if (confirm("All tasks will be deleted. Would you like to continue?")) {
+        localStorage.removeItem("data");
+    }
+});
+
+document.getElementById("reset-theme").addEventListener("click", () => {
+    localStorage.removeItem("theme");
+});
+
 document.getElementById("reset").addEventListener("click", () => {
-    localStorage.clear();
+    if (confirm("All saved data will be deleted. Would you like to continue?")) {
+        localStorage.clear();
+    }
 });
 
 function createTask(uuid, title, date, details) {
