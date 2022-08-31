@@ -151,3 +151,7 @@ dialog button {
 dialog button:hover {
 	background-color: var(--accent-color);
 }
+
+dialog>.button-cluster {
+	justify-content: right;
+}
