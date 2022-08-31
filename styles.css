@@ -156,6 +156,10 @@ dialog>.button-cluster {
 	justify-content: right;
 }
 
+.warning {
+	color: var(--error-color);
+}
+
 /* Themes */
 
 .theme-abyss {
@@ -164,7 +168,6 @@ dialog>.button-cluster {
 	--surface-color: #18181a;
 	--control-color: #2c2c30;
 	--accent-color: #059fff;
-	--error-color: #f84747;
 }
 
 .theme-glacier {
@@ -173,7 +176,6 @@ dialog>.button-cluster {
 	--surface-color: #d0dee5;
 	--control-color: #b6ccd7;
 	--accent-color: #71a3bc;
-	--error-color: #f84747;
 }
 
 .theme-sage {
@@ -182,7 +184,6 @@ dialog>.button-cluster {
 	--surface-color: #a1b794;
 	--control-color: #8aa27c;
 	--accent-color: #5c8a5b;
-	--error-color: #f84747;
 }
 
 .theme-manilla {
@@ -191,7 +192,6 @@ dialog>.button-cluster {
 	--surface-color: #b7ac93;
 	--control-color: #a3977c;
 	--accent-color: #917856;
-	--error-color: #f84747;
 }
 
 .theme-rose {
@@ -200,7 +200,6 @@ dialog>.button-cluster {
 	--surface-color: #e0c4c0;
 	--control-color: #c7a8a5;
 	--accent-color: #ae817c;
-	--error-color: #f84747;
 }
 
 .theme-lavender {
@@ -209,5 +208,4 @@ dialog>.button-cluster {
 	--surface-color: #b0acd7;
 	--control-color: #a19bd1;
 	--accent-color: #7e78be;
-	--error-color: #f84747;
 }
