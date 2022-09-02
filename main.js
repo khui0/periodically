@@ -77,7 +77,7 @@ function createTask(uuid, title, date, details) {
         <p>${date}</p>
         <p>${details}</p>
         <div class="button-cluster">
-            <button data-delete="${uuid}">Finished</button>
+            <button data-delete="${uuid}">Completed</button>
         </div>
     </div>`;
     addButtonEvents();
