@@ -4,6 +4,6 @@
 
 A simple to-do list you can check periodically to stay on top of things
 
-Organize the things you've been putting off doing and set due dates for yourself. Tasks are automatically prioritized by due date and are stored in localStorage
+Organize the things you've been putting off doing and set due dates for yourself. Tasks are automatically sorted by due date and are saved locally using the [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)
 
 Now includes different themes!
