@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "https://jspm.dev/uuid";
+
 const status = document.getElementById("status");
 const feed = document.getElementById("feed");
 
