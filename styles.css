@@ -172,9 +172,9 @@ dialog>.button-cluster {
 
 .theme-glacier {
 	--text-color: #242424;
-	--background-color: #e5edf1;
-	--surface-color: #d0dee5;
-	--control-color: #b6ccd7;
+	--background-color: #ddf3ff;
+	--surface-color: #b8daec;
+	--control-color: #9ec2d6;
 	--accent-color: #71a3bc;
 }
 
