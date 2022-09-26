@@ -34,6 +34,7 @@ body {
 :focus {
 	outline: none;
 	box-shadow: 0 0 0 2px var(--accent-color);
+    transition: box-shadow 100ms ease-in-out;
 }
 
 h1,
