@@ -147,7 +147,7 @@ function updatePastDue() {
     let current = Date.now();
     for (let i = 0; i < data.length; i++) {
         if (current > data[i].timestamp) {
-            document.getElementById(data[i].uuid).querySelector("p").style.color = "var(--error-color)";
+            document.getElementById(data[i].uuid).querySelector("p").className = "warning";
         }
     }
 }
