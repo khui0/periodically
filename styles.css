@@ -33,7 +33,7 @@ body {
 
 :focus {
 	outline: none;
-	filter: brightness(1.1);
+	box-shadow: 0 0 0 2px var(--accent-color);
 }
 
 h1,
@@ -95,7 +95,6 @@ button:hover {
 	flex-wrap: wrap;
 	display: flex;
 	justify-content: space-between;
-	overflow: hidden;
 }
 
 .header button {
@@ -173,7 +172,7 @@ dialog>.button-cluster {
 .theme-glacier {
 	--text-color: #242424;
 	--background-color: #ddf3ff;
-	--surface-color: #b8daec;
+	--surface-color: #c0e2f5;
 	--control-color: #9ec2d6;
 	--accent-color: #71a3bc;
 }
