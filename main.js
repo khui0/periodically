@@ -151,3 +151,14 @@ function updatePastDue() {
         }
     }
 }
+
+document.getElementById("migrate").addEventListener("click", () => {
+    let old = localStorage.getItem("data");
+    if (old) {
+        localStorage.setItem("periodically-data", old);
+        alert("Success! Refresh the page 🎉");
+    }
+    else {
+        alert("No old data found 😭");
+    }
+});
