@@ -1,39 +1,39 @@
 :root {
-	--text-color: #ffffff;
-	--background-color: #32383f;
-	--surface-color: #444c56;
-	--control-color: #5e6977;
-	--accent-color: #059fff;
-	--error-color: #f84747;
+    --text-color: #ffffff;
+    --background-color: #32383f;
+    --surface-color: #444c56;
+    --control-color: #5e6977;
+    --accent-color: #059fff;
+    --error-color: #f84747;
 }
 
 html,
 body {
-	overflow: hidden;
-	height: 100%;
+    overflow: hidden;
+    height: 100%;
 }
 
 html {
-	font: 16px "Poppins", sans-serif;
-	-webkit-text-size-adjust: 100%;
-	-webkit-user-select: none;
-	user-select: none;
+    font: 16px "Poppins", sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 body {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	box-sizing: border-box;
-	margin: 0;
-	padding: 20px;
-	color: var(--text-color);
-	background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 20px;
+    color: var(--text-color);
+    background-color: var(--background-color);
 }
 
 :focus {
-	outline: none;
-	box-shadow: 0 0 0 2px var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-color);
     transition: box-shadow 100ms ease-in-out;
 }
 
@@ -44,168 +44,168 @@ h4,
 h5,
 h6,
 p {
-	margin: 0;
+    margin: 0;
 }
 
 a {
-	color: var(--accent-color);
-	text-decoration: none;
+    color: var(--accent-color);
+    text-decoration: none;
 }
 
 a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 input,
 textarea {
-	box-sizing: border-box;
-	width: 100%;
-	resize: none;
-	border: none;
-	border-radius: 8px;
-	color: inherit;
-	background-color: var(--control-color);
-	font: inherit;
+    box-sizing: border-box;
+    width: 100%;
+    resize: none;
+    border: none;
+    border-radius: 8px;
+    color: inherit;
+    background-color: var(--control-color);
+    font: inherit;
 }
 
 button {
-	height: 2.5em;
-	margin: 0;
-	padding: 0 1em;
-	border: none;
-	border-radius: 8px;
-	color: var(--text-color);
-	background-color: var(--surface-color);
-	font: inherit;
+    height: 2.5em;
+    margin: 0;
+    padding: 0 1em;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-color);
+    background-color: var(--surface-color);
+    font: inherit;
 }
 
 button:hover {
-	background-color: var(--accent-color);
+    background-color: var(--accent-color);
 }
 
 .button-cluster {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 5px;
-	-webkit-user-select: none;
-	user-select: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .header {
-	flex: 0 0 auto;
-	flex-wrap: wrap;
-	display: flex;
-	justify-content: space-between;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
 }
 
 .header button {
-	height: 3em;
+    height: 3em;
 }
 
 #feed {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	overflow: auto;
-	border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+    border-radius: 8px;
 }
 
 .card {
-	flex: 0 0 auto;
-	height: fit-content;
-	padding: 10px;
-	border-radius: 8px;
-	background-color: var(--surface-color);
-	-webkit-user-select: text;
-	user-select: text;
+    flex: 0 0 auto;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--surface-color);
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 .card>p {
-	max-height: 400px;
-	overflow: auto;
+    max-height: 400px;
+    overflow: auto;
 }
 
 dialog {
-	width: min(80%, 500px);
-	padding: 20px;
-	border: none;
-	border-radius: 8px;
-	color: var(--text-color);
-	background-color: var(--surface-color);
-	-webkit-user-select: none;
-	user-select: none;
+    width: min(80%, 500px);
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-color);
+    background-color: var(--surface-color);
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 dialog::backdrop {
-	background-color: black;
-	opacity: 0.25;
+    background-color: black;
+    opacity: 0.25;
 }
 
 .card button,
 dialog button {
-	margin-top: 5px;
-	background-color: var(--control-color);
+    margin-top: 5px;
+    background-color: var(--control-color);
 }
 
 .card button:hover,
 dialog button:hover {
-	background-color: var(--accent-color);
+    background-color: var(--accent-color);
 }
 
 dialog>.button-cluster {
-	justify-content: right;
+    justify-content: right;
 }
 
 .warning {
-	color: var(--error-color);
+    color: var(--error-color);
 }
 
 /* Themes */
 
 .theme-abyss {
-	--text-color: #ffffff;
-	--background-color: #000000;
-	--surface-color: #18181a;
-	--control-color: #2c2c30;
-	--accent-color: #059fff;
+    --text-color: #ffffff;
+    --background-color: #000000;
+    --surface-color: #18181a;
+    --control-color: #2c2c30;
+    --accent-color: #059fff;
 }
 
 .theme-glacier {
-	--text-color: #242424;
-	--background-color: #ddf3ff;
-	--surface-color: #c0e2f5;
-	--control-color: #9ec2d6;
-	--accent-color: #71a3bc;
+    --text-color: #242424;
+    --background-color: #ddf3ff;
+    --surface-color: #c0e2f5;
+    --control-color: #9ec2d6;
+    --accent-color: #71a3bc;
 }
 
 .theme-sage {
-	--text-color: #242424;
-	--background-color: #bacbb0;
-	--surface-color: #a1b794;
-	--control-color: #8aa27c;
-	--accent-color: #5c8a5b;
+    --text-color: #242424;
+    --background-color: #bacbb0;
+    --surface-color: #a1b794;
+    --control-color: #8aa27c;
+    --accent-color: #5c8a5b;
 }
 
 .theme-dune {
-	--text-color: #242424;
-	--background-color: #cbc3af;
-	--surface-color: #b7ac93;
-	--control-color: #a3977c;
-	--accent-color: #917856;
+    --text-color: #242424;
+    --background-color: #cbc3af;
+    --surface-color: #b7ac93;
+    --control-color: #a3977c;
+    --accent-color: #917856;
 }
 
 .theme-rose {
-	--text-color: #242424;
-	--background-color: #F4DBD8;
-	--surface-color: #e0c4c0;
-	--control-color: #c7a8a5;
-	--accent-color: #ae817c;
+    --text-color: #242424;
+    --background-color: #F4DBD8;
+    --surface-color: #e0c4c0;
+    --control-color: #c7a8a5;
+    --accent-color: #ae817c;
 }
 
 .theme-lavender {
-	--text-color: #242424;
-	--background-color: #c3c0e5;
-	--surface-color: #b0acd7;
-	--control-color: #a19bd1;
-	--accent-color: #7e78be;
+    --text-color: #242424;
+    --background-color: #c3c0e5;
+    --surface-color: #b0acd7;
+    --control-color: #a19bd1;
+    --accent-color: #7e78be;
 }

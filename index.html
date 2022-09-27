@@ -2,80 +2,80 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Periodically</title>
-	<link rel="stylesheet" href="styles.css">
-	<!-- Google Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-		rel="stylesheet">
-	<!-- Favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-	<link rel="manifest" href="favicon/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodically</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
 </head>
 
 <body>
-	<div class="header">
-		<h1 id="status"></h1>
-		<div class="button-cluster">
-			<button data-open="task">New task</button>
-			<button data-open="options">Options</button>
-			<button data-open="info">Info</button>
-		</div>
-	</div>
-	<div id="feed"></div>
-	<!-- Dialogs -->
-	<dialog id="task">
-		<h2>New task</h2>
-		<p>Title:</p>
-		<input type="text" autocomplete="off" id="task-title">
-		<p>Due on:</p>
-		<input type="datetime-local" id="task-date">
-		<p>Details:</p>
-		<textarea rows="8" id="task-details"></textarea>
-		<div class="button-cluster">
-			<button data-close="task">Close</button>
-			<button id="task-submit">Create</button>
-		</div>
-	</dialog>
-	<dialog id="options">
-		<h2>Options</h2>
-		<p>Theme</p>
-		<button data-theme="">Classic</button>
-		<button data-theme="theme-abyss">Abyss</button>
-		<button data-theme="theme-glacier">Glacier</button>
-		<button data-theme="theme-sage">Sage</button>
-		<button data-theme="theme-dune">Dune</button>
-		<button data-theme="theme-rose">Rose</button>
-		<button data-theme="theme-lavender">Lavender</button>
-		<p>Missing tasks? (Current tasks will be overwritten if successful)</p>
-		<button id="migrate">Migrate data</button>
-		<p>Storage</p>
-		<button id="reset-tasks">Reset tasks</button>
-		<button id="reset-theme">Reset theme</button>
-		<button id="reset">Reset all</button>
-		<p class="warning">Clearing website data will delete all tasks</p>
-		<div class="button-cluster">
-			<button data-close="options">Close</button>
-		</div>
-	</dialog>
-	<dialog id="info">
-		<h2>Info</h2>
-		<p>A simple to-do list you can check periodically to stay on top of things</p>
-		<p>Try out <a href="https://khui0.github.io/bell-tracker/" target="_blank">Bell Tracker</a>!</p>
-		<p>View the source on <a href="https://github.com/khui0/periodically" target="_blank">GitHub</a></p>
-		<div class="button-cluster">
-			<button data-close="info">Close</button>
-		</div>
-	</dialog>
-	<!-- Scripts -->
-	<script src="main.js" type="module"></script>
+    <div class="header">
+        <h1 id="status"></h1>
+        <div class="button-cluster">
+            <button data-open="task">New task</button>
+            <button data-open="options">Options</button>
+            <button data-open="info">Info</button>
+        </div>
+    </div>
+    <div id="feed"></div>
+    <!-- Dialogs -->
+    <dialog id="task">
+        <h2>New task</h2>
+        <p>Title:</p>
+        <input type="text" autocomplete="off" id="task-title">
+        <p>Due on:</p>
+        <input type="datetime-local" id="task-date">
+        <p>Details:</p>
+        <textarea rows="8" id="task-details"></textarea>
+        <div class="button-cluster">
+            <button data-close="task">Close</button>
+            <button id="task-submit">Create</button>
+        </div>
+    </dialog>
+    <dialog id="options">
+        <h2>Options</h2>
+        <p>Theme</p>
+        <button data-theme="">Classic</button>
+        <button data-theme="theme-abyss">Abyss</button>
+        <button data-theme="theme-glacier">Glacier</button>
+        <button data-theme="theme-sage">Sage</button>
+        <button data-theme="theme-dune">Dune</button>
+        <button data-theme="theme-rose">Rose</button>
+        <button data-theme="theme-lavender">Lavender</button>
+        <p>Missing tasks? (Current tasks will be overwritten if successful)</p>
+        <button id="migrate">Migrate data</button>
+        <p>Storage</p>
+        <button id="reset-tasks">Reset tasks</button>
+        <button id="reset-theme">Reset theme</button>
+        <button id="reset">Reset all</button>
+        <p class="warning">Clearing website data will delete all tasks</p>
+        <div class="button-cluster">
+            <button data-close="options">Close</button>
+        </div>
+    </dialog>
+    <dialog id="info">
+        <h2>Info</h2>
+        <p>A simple to-do list you can check periodically to stay on top of things</p>
+        <p>Try out <a href="https://khui0.github.io/bell-tracker/" target="_blank">Bell Tracker</a>!</p>
+        <p>View the source on <a href="https://github.com/khui0/periodically" target="_blank">GitHub</a></p>
+        <div class="button-cluster">
+            <button data-close="info">Close</button>
+        </div>
+    </dialog>
+    <!-- Scripts -->
+    <script src="main.js" type="module"></script>
 </body>
 
 </html>
