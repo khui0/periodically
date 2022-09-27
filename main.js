@@ -3,9 +3,8 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 const status = document.getElementById("status");
 const feed = document.getElementById("feed");
 
-var data = JSON.parse(localStorage.getItem("data") || "[]");
-
-document.body.className = localStorage.getItem("theme") || "";
+var data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
+document.body.className = localStorage.getItem("periodically-theme") || "";
 
 updateTasks();
 updateStatus();
@@ -17,7 +16,7 @@ document.querySelectorAll("[data-theme]").forEach(item => {
     item.addEventListener("click", () => {
         let value = item.getAttribute("data-theme");
         document.body.className = value;
-        localStorage.setItem("theme", value);
+        localStorage.setItem("periodically-theme", value);
     });
 });
 
@@ -59,17 +58,18 @@ document.getElementById("task-submit").addEventListener("click", () => {
 
 document.getElementById("reset-tasks").addEventListener("click", () => {
     if (confirm("All tasks will be deleted. Would you like to continue?")) {
-        localStorage.removeItem("data");
+        localStorage.removeItem("periodically-data");
     }
 });
 
 document.getElementById("reset-theme").addEventListener("click", () => {
-    localStorage.removeItem("theme");
+    localStorage.removeItem("periodically-theme");
 });
 
 document.getElementById("reset").addEventListener("click", () => {
     if (confirm("All saved data will be deleted. Would you like to continue?")) {
-        localStorage.clear();
+        localStorage.removeItem("periodically-data");
+        localStorage.removeItem("periodically-theme");
     }
 });
 
@@ -93,7 +93,7 @@ function addButtonEvents() {
             document.getElementById(uuid).remove();
             // Remove item from data
             data = data.filter(item => item.uuid != uuid);
-            localStorage.setItem("data", JSON.stringify(data));
+            localStorage.setItem("periodically-data", JSON.stringify(data));
             updateStatus();
         });
     });
@@ -107,7 +107,7 @@ function storeTask(uuid, title, timestamp, details) {
         "details": details
     };
     data.push(item);
-    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("periodically-data", JSON.stringify(data));
 }
 
 function endOfToday() {
