@@ -136,10 +136,10 @@ function updateTasks() {
 function updateStatus() {
     let amount = data.length;
     if (amount == 1) {
-        document.getElementById("status").textContent = `${amount} thing left to do`;
+        status.textContent = `${amount} thing left to do`;
     }
     else {
-        document.getElementById("status").textContent = `${amount} things left to do`;
+        status.textContent = `${amount} things left to do`;
     }
 }
 
