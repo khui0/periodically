@@ -64,7 +64,7 @@ textarea {
     border: none;
     border-radius: 8px;
     color: inherit;
-    background-color: var(--control-color);
+    background-color: var(--surface-color);
     font: inherit;
 }
 
@@ -154,6 +154,11 @@ dialog button:hover {
 
 dialog>.button-cluster {
     justify-content: right;
+}
+
+dialog>input,
+dialog>textarea {
+    background-color: var(--control-color);
 }
 
 .warning {
