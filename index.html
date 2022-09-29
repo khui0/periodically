@@ -39,7 +39,7 @@
         <input type="datetime-local" id="task-date">
         <p>Details:</p>
         <textarea rows="8" id="task-details"></textarea>
-        <div class="button-cluster">
+        <div class="button-cluster right">
             <button data-close="task">Close</button>
             <button id="task-submit">Create</button>
         </div>
@@ -47,21 +47,27 @@
     <dialog id="options">
         <h2>Options</h2>
         <p>Theme</p>
-        <button data-theme="">Classic</button>
-        <button data-theme="theme-abyss">Abyss</button>
-        <button data-theme="theme-glacier">Glacier</button>
-        <button data-theme="theme-sage">Sage</button>
-        <button data-theme="theme-dune">Dune</button>
-        <button data-theme="theme-rose">Rose</button>
-        <button data-theme="theme-lavender">Lavender</button>
-        <p>Missing tasks? (Current tasks will be overwritten if successful)</p>
-        <button id="migrate">Migrate data</button>
-        <p>Storage</p>
-        <button id="reset-tasks">Reset tasks</button>
-        <button id="reset-theme">Reset theme</button>
-        <button id="reset">Reset all</button>
-        <p class="warning">Clearing website data will delete all tasks</p>
         <div class="button-cluster">
+            <button data-theme="">Classic</button>
+            <button data-theme="theme-abyss">Abyss</button>
+            <button data-theme="theme-glacier">Glacier</button>
+            <button data-theme="theme-sage">Sage</button>
+            <button data-theme="theme-dune">Dune</button>
+            <button data-theme="theme-rose">Rose</button>
+            <button data-theme="theme-lavender">Lavender</button>
+        </div>
+        <p>Missing tasks? (Current tasks will be overwritten if successful)</p>
+        <div class="button-cluster">
+            <button id="migrate">Migrate data</button>
+        </div>
+        <p>Storage</p>
+        <div class="button-cluster">
+            <button id="reset-tasks">Reset tasks</button>
+            <button id="reset-theme">Reset theme</button>
+            <button id="reset">Reset all</button>
+        </div>
+        <p class="warning">Clearing website data will delete all tasks</p>
+        <div class="button-cluster right">
             <button data-close="options">Close</button>
         </div>
     </dialog>
@@ -70,7 +76,7 @@
         <p>A simple to-do list you can check periodically to stay on top of things</p>
         <p>Try out <a href="https://khui0.github.io/bell-tracker/" target="_blank">Bell Tracker</a>!</p>
         <p>View the source on <a href="https://github.com/khui0/periodically" target="_blank">GitHub</a></p>
-        <div class="button-cluster">
+        <div class="button-cluster right">
             <button data-close="info">Close</button>
         </div>
     </dialog>

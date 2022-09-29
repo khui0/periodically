@@ -38,6 +38,11 @@ body {
     transition: box-shadow 100ms ease-in-out;
 }
 
+::placeholder {
+    color: var(--text-color);
+    opacity: 0.5;
+}
+
 h1,
 h2,
 h3,
@@ -92,6 +97,14 @@ button:hover {
     user-select: none;
 }
 
+.button-cluster+.button-cluster {
+    margin-top: 5px;
+}
+
+.button-cluster.right {
+    justify-content: right;
+}
+
 .header {
     flex: 0 0 auto;
     flex-wrap: wrap;
@@ -126,6 +139,10 @@ button:hover {
     overflow: auto;
 }
 
+.card>.button-cluster {
+    margin-top: 5px;
+}
+
 dialog {
     width: min(80%, 500px);
     padding: 20px;
@@ -144,17 +161,12 @@ dialog::backdrop {
 
 .card button,
 dialog button {
-    margin-top: 5px;
     background-color: var(--control-color);
 }
 
 .card button:hover,
 dialog button:hover {
     background-color: var(--accent-color);
-}
-
-dialog>.button-cluster {
-    justify-content: right;
 }
 
 dialog>input,
