@@ -63,11 +63,12 @@ document.getElementById("reset-tasks").addEventListener("click", () => {
 });
 
 document.getElementById("reset-theme").addEventListener("click", () => {
+    alert("Theme has been reset. Refresh to see changes 🦋");
     localStorage.removeItem("periodically-theme");
 });
 
 document.getElementById("reset").addEventListener("click", () => {
-    if (confirm("All saved data will be deleted. Would you like to continue?")) {
+    if (confirm("All user data will be deleted. Would you like to continue?")) {
         localStorage.removeItem("periodically-data");
         localStorage.removeItem("periodically-theme");
     }
@@ -159,6 +160,6 @@ document.getElementById("migrate").addEventListener("click", () => {
         alert("Success! Refresh the page 🎉");
     }
     else {
-        alert("No old data found 😭");
+        alert("Couldn't find old data 😭");
     }
 });
