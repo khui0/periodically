@@ -32,16 +32,16 @@
     <div id="feed"></div>
     <!-- Dialogs -->
     <dialog id="task">
-        <h2>New task</h2>
-        <p>Title:</p>
-        <input type="text" autocomplete="off" id="task-title">
-        <p>Due on:</p>
-        <input type="datetime-local" id="task-date">
-        <p>Details:</p>
-        <textarea rows="8" id="task-details"></textarea>
+        <h2></h2>
+        <p>Title</p>
+        <input type="text" autocomplete="off" data-title>
+        <p>Due on</p>
+        <input type="datetime-local" data-date>
+        <p>Details</p>
+        <textarea rows="8" data-details></textarea>
         <div class="button-cluster right">
             <button data-close="task">Close</button>
-            <button id="task-submit">Create</button>
+            <button id="task-submit"></button>
         </div>
     </dialog>
     <dialog id="options">

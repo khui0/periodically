@@ -8,7 +8,6 @@ document.body.className = localStorage.getItem("periodically-theme") || "";
 
 updateTasks();
 updateStatus();
-resetTaskModal();
 
 setInterval(updatePastDue, 100);
 
@@ -27,6 +26,9 @@ document.querySelectorAll("[data-open]").forEach(item => {
         if (id != "task") {
             document.getElementById(id).querySelector("button[data-close]").focus();
         }
+        else {
+            setTaskModal();
+        }
     });
 });
 
@@ -36,23 +38,33 @@ document.querySelectorAll("[data-close]").forEach(item => {
     });
 });
 
-document.getElementById("task").addEventListener("close", resetTaskModal);
-
-document.getElementById("task-submit").addEventListener("click", () => {
-    let title = document.getElementById("task-title").value;
-    let date = document.getElementById("task-date").value;
-    let details = document.getElementById("task-details").value;
+document.getElementById("task-submit").addEventListener("click", e => {
+    let modal = document.getElementById("task");
+    let title = modal.querySelector("[data-title]").value;
+    let date = modal.querySelector("[data-date]").value;
+    let details = modal.querySelector("[data-details]").value;
 
     let timestamp = new Date(date).getTime();
     if (title?.trim() && date?.trim()) {
-        let uuid = uuidv4();
-        storeTask(uuid, title, timestamp, details);
-        updateTasks();
-        updateStatus();
-        resetTaskModal();
+        if (!e.target.getAttribute("data-uuid")) {
+            let uuid = uuidv4();
+            storeTask(uuid, title, timestamp, details);
+            updateTasks();
+            updateStatus();
+            document.getElementById("task").close();
+        }
+        else {
+            let uuid = e.target.getAttribute("data-uuid");
+            data = data.filter(item => item.uuid != uuid);
+            localStorage.setItem("periodically-data", JSON.stringify(data));
+            storeTask(uuid, title, timestamp, details);
+            updateTasks();
+            updateStatus();
+            document.getElementById("task").close();
+        }
     }
     else {
-        alert("Title and date seem to be empty 🤔");
+        alert("Title and date can't be empty 🤔");
     }
 });
 
@@ -81,6 +93,7 @@ function createTask(uuid, title, date, details) {
         <p>${details}</p>
         <div class="button-cluster">
             <button data-delete="${uuid}">Completed</button>
+            <button data-edit="${uuid}">Edit</button>
         </div>
     </div>`;
     addButtonEvents();
@@ -92,12 +105,32 @@ function addButtonEvents() {
             let uuid = item.getAttribute("data-delete");
             // Remove item from DOM
             document.getElementById(uuid).remove();
-            // Remove item from data
+            // Remove item from data object
             data = data.filter(item => item.uuid != uuid);
             localStorage.setItem("periodically-data", JSON.stringify(data));
             updateStatus();
         });
     });
+    document.querySelectorAll("[data-edit]").forEach(item => {
+        item.addEventListener("click", () => {
+            let uuid = item.getAttribute("data-edit");
+            let task = data.find(item => item.uuid == uuid);
+            setTaskModal("Edit task", "Save", uuid, [task.title, timeToISO(task.timestamp), task.details]);
+            document.getElementById("task").showModal();
+            updateStatus();
+        });
+    });
+}
+
+function setTaskModal(title = "Create new task", action = "Create", uuid = "", fields = ["", endOfToday(), ""]) {
+    let modal = document.getElementById("task");
+    let submit = document.getElementById("task-submit");
+    modal.querySelector("h2").textContent = title;
+    modal.querySelector("[data-title]").value = fields[0];
+    modal.querySelector("[data-date]").value = fields[1];
+    modal.querySelector("[data-details]").value = fields[2];
+    submit.textContent = action;
+    submit.setAttribute("data-uuid", uuid);
 }
 
 function storeTask(uuid, title, timestamp, details) {
@@ -111,24 +144,9 @@ function storeTask(uuid, title, timestamp, details) {
     localStorage.setItem("periodically-data", JSON.stringify(data));
 }
 
-function endOfToday() {
-    let date = new Date();
-    let year = date.getFullYear()
-    let month = (date.getMonth() + 1).toString().padStart(2, "0");
-    let day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}T23:59`;
-}
-
-function resetTaskModal() {
-    document.getElementById("task").close();
-    document.getElementById("task-title").value = "";
-    document.getElementById("task-date").value = endOfToday();
-    document.getElementById("task-details").value = "";
-}
-
 function updateTasks() {
     feed.innerHTML = "";
-    data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0))
+    data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     for (let i = 0; i < data.length; i++) {
         createTask(data[i].uuid, data[i].title, timeToString(data[i].timestamp), data[i].details);
     }
@@ -173,8 +191,28 @@ function timeToString(timestamp) {
         return `${month}/${day}/${year} ${hours}:${minutes} ${period}`;
     }
     else {
-        return "Timestamp unknown"
+        return "Timestamp unknown";
     }
+}
+
+// Converts date into ISO format for use in datetime-local input
+function timeToISO(timestamp) {
+    let date = new Date(timestamp);
+    let year = date.getFullYear();
+    let month = (date.getMonth() + 1).toString().padStart(2, "0");
+    let day = date.getDate().toString().padStart(2, "0");
+    let hours = date.getHours();
+    let minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+// Returns 11:59 PM in ISO format
+function endOfToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = (date.getMonth() + 1).toString().padStart(2, "0");
+    let day = date.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}T23:59`;
 }
 
 // Migrate data to periodically-data
