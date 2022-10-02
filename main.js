@@ -38,6 +38,13 @@ document.querySelectorAll("[data-close]").forEach(item => {
     });
 });
 
+// Keybord shortcut to submit task
+document.getElementById("task").addEventListener("keydown", e => {
+    if (e.ctrlKey && e.key == "Enter") {
+        document.getElementById("task-submit").click();
+    }
+});
+
 document.getElementById("task-submit").addEventListener("click", e => {
     let modal = document.getElementById("task");
     let title = modal.querySelector("[data-title]").value;
@@ -49,19 +56,17 @@ document.getElementById("task-submit").addEventListener("click", e => {
         if (!e.target.getAttribute("data-uuid")) {
             let uuid = uuidv4();
             storeTask(uuid, title, timestamp, details);
-            updateTasks();
-            updateStatus();
-            document.getElementById("task").close();
         }
         else {
             let uuid = e.target.getAttribute("data-uuid");
+            // Removes old task from data object and localStorage
             data = data.filter(item => item.uuid != uuid);
             localStorage.setItem("periodically-data", JSON.stringify(data));
             storeTask(uuid, title, timestamp, details);
-            updateTasks();
-            updateStatus();
-            document.getElementById("task").close();
         }
+        updateTasks();
+        updateStatus();
+        document.getElementById("task").close();
     }
     else {
         alert("Title and date can't be empty 🤔");
