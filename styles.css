@@ -43,6 +43,10 @@ body {
     opacity: 0.5;
 }
 
+::selection {
+    background-color: var(--accent-color);
+}
+
 h1,
 h2,
 h3,
@@ -134,8 +138,16 @@ button:hover {
     user-select: text;
 }
 
+.card>h3 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .card>p {
-    max-height: 400px;
+    max-height: 150px;
+    word-break: break-all;
+    white-space: normal;
     overflow: auto;
 }
 

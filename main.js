@@ -108,12 +108,15 @@ function addButtonEvents() {
     document.querySelectorAll("[data-delete]").forEach(item => {
         item.addEventListener("click", () => {
             let uuid = item.getAttribute("data-delete");
-            // Remove item from DOM
-            document.getElementById(uuid).remove();
-            // Remove item from data object
-            data = data.filter(item => item.uuid != uuid);
-            localStorage.setItem("periodically-data", JSON.stringify(data));
-            updateStatus();
+            let task = data.find(item => item.uuid == uuid);
+            if (confirm(`Would you like to mark "${truncateString(task.title, 20)}" as completed? 🥳`)) {
+                // Remove item from DOM
+                document.getElementById(uuid).remove();
+                // Remove item from data object
+                data = data.filter(item => item.uuid != uuid);
+                localStorage.setItem("periodically-data", JSON.stringify(data));
+                updateStatus();
+            }
         });
     });
     document.querySelectorAll("[data-edit]").forEach(item => {
@@ -218,6 +221,15 @@ function endOfToday() {
     let month = (date.getMonth() + 1).toString().padStart(2, "0");
     let day = date.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}T23:59`;
+}
+
+function truncateString(string, length) {
+    if (string.length > length) {
+        return string.substring(0, length) + "...";
+    }
+    else {
+        return string
+    }
 }
 
 // Migrate data to periodically-data
