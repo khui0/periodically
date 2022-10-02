@@ -130,7 +130,7 @@ function updateTasks() {
     feed.innerHTML = "";
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0))
     for (let i = 0; i < data.length; i++) {
-        createTask(data[i].uuid, data[i].title, new Date(data[i].timestamp).toLocaleString(), data[i].details);
+        createTask(data[i].uuid, data[i].title, timeToString(data[i].timestamp), data[i].details);
     }
 }
 
@@ -153,6 +153,31 @@ function updatePastDue() {
     }
 }
 
+// Converts unix timestamp into string
+function timeToString(timestamp) {
+    let date = new Date(timestamp);
+    if (timestamp) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let year = date.getFullYear();
+        let hours = date.getHours();
+        let minutes = date.getMinutes().toString().padStart(2, "0");
+        let period;
+        if (hours > 12) {
+            hours %= 12;
+            period = "PM";
+        }
+        else {
+            period = "AM";
+        }
+        return `${month}/${day}/${year} ${hours}:${minutes} ${period}`;
+    }
+    else {
+        return "Timestamp unknown"
+    }
+}
+
+// Migrate data to periodically-data
 document.getElementById("migrate").addEventListener("click", () => {
     let old = localStorage.getItem("data");
     if (old) {
