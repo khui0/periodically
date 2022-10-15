@@ -1,0 +1,79 @@
+.theme-abyss {
+    color-scheme: dark;
+    --text-color: #ffffff;
+    --background-color: #000000;
+    --surface-color: #18181a;
+    --control-color: #2c2c30;
+    --accent-color: #059fff;
+    --accent-text-color: #ffffff;
+}
+
+.theme-graphite {
+    color-scheme: dark;
+    --text-color: #ffffff;
+    --background-color: #1f1f1f;
+    --surface-color: #292929;
+    --control-color: #383838;
+    --accent-color: #354f63;
+    --accent-text-color: #ffffff;
+}
+
+.theme-ghost {
+    color-scheme: light;
+    --text-color: #242424;
+    --background-color: #ffffff;
+    --surface-color: #ececec;
+    --control-color: #d6d6d6;
+    --accent-color: #242424;
+    --accent-text-color: #ffffff;
+}
+
+.theme-frost {
+    color-scheme: light;
+    --text-color: #242424;
+    --background-color: #d7f1ff;
+    --surface-color: #c0e2f5;
+    --control-color: #a2cfe9;
+    --accent-color: #71b2d3;
+    --accent-text-color: #242424;
+}
+
+.theme-sage {
+    color-scheme: light;
+    --text-color: #242424;
+    --background-color: #bacbb0;
+    --surface-color: #a1b794;
+    --control-color: #8aa27c;
+    --accent-color: #5c8a5b;
+    --accent-text-color: #242424;
+}
+
+.theme-dune {
+    color-scheme: light;
+    --text-color: #242424;
+    --background-color: #cbc3af;
+    --surface-color: #b7ac93;
+    --control-color: #a3977c;
+    --accent-color: #917856;
+    --accent-text-color: #242424;
+}
+
+.theme-rose {
+    color-scheme: light;
+    --text-color: #242424;
+    --background-color: #F4DBD8;
+    --surface-color: #e0c4c0;
+    --control-color: #c7a8a5;
+    --accent-color: #ae817c;
+    --accent-text-color: #242424;
+}
+
+.theme-lavender {
+    color-scheme: light;
+    --text-color: #242424;
+    --background-color: #c3c0e5;
+    --surface-color: #b0acd7;
+    --control-color: #a19bd1;
+    --accent-color: #7e78be;
+    --accent-text-color: #242424;
+}
