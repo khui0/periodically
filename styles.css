@@ -67,6 +67,11 @@ a:hover {
     text-decoration: underline;
 }
 
+hr {
+    border: 1px solid var(--control-color);
+    box-sizing: border-box;
+}
+
 input,
 textarea {
     box-sizing: border-box;
