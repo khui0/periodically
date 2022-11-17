@@ -98,6 +98,7 @@ function createTask(uuid, title, date, details) {
         <p>${details}</p>
         <div class="button-cluster">
             <button data-delete="${uuid}">Completed</button>
+            <button data-countdown="${uuid}">Countdown</button>
             <button data-edit="${uuid}">Edit</button>
         </div>
     </div>`;
@@ -126,6 +127,20 @@ function addButtonEvents() {
             setTaskModal("Edit task", "Save", uuid, [task.title, timeToISO(task.timestamp), task.details]);
             document.getElementById("task").showModal();
             updateStatus();
+        });
+    });
+    document.querySelectorAll("[data-countdown]").forEach(item => {
+        item.addEventListener("click", () => {
+            let uuid = item.getAttribute("data-countdown");
+            let task = data.find(item => item.uuid == uuid);
+            // Generate URL
+            let params = new URLSearchParams();
+            params.append("title", task.title);
+            params.append("date", new Date(task.timestamp).toISOString());
+            params.append("accent", "#ffffff");
+            params.append("icon", "📝");
+            // URL may change in the future
+            window.open(`https://khui0.github.io/countdown/?${params.toString()}`, "_blank");
         });
     });
 }
