@@ -154,7 +154,7 @@ button:hover {
 .card>p {
     max-height: 150px;
     word-break: break-all;
-    white-space: normal;
+    white-space: pre-wrap;
     overflow: auto;
 }
 
