@@ -145,7 +145,7 @@ function addButtonEvents() {
     });
 }
 
-function setTaskModal(title = "Create new task", action = "Create", uuid = "", fields = ["", endOfToday(), ""]) {
+function setTaskModal(title = "Add task", action = "Add", uuid = "", fields = ["", endOfToday(), ""]) {
     let modal = document.getElementById("task");
     let submit = document.getElementById("task-submit");
     modal.querySelector("h2").textContent = title;
@@ -178,10 +178,10 @@ function updateTasks() {
 function updateStatus() {
     let amount = data.length;
     if (amount == 1) {
-        status.textContent = `${amount} thing left to do`;
+        status.textContent = `${amount} task remaining`;
     }
     else {
-        status.textContent = `${amount} things left to do`;
+        status.textContent = `${amount} tasks remaining`;
     }
 }
 
