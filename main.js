@@ -91,7 +91,7 @@ document.getElementById("reset").addEventListener("click", () => {
     }
 });
 
-function createTask(uuid, title, date, details) {
+function addTask(uuid, title, date, details) {
     feed.innerHTML += `<div class="card" id="${uuid}">
         <h3>${title}</h3>
         <p>${date}</p>
@@ -171,7 +171,7 @@ function updateTasks() {
     feed.innerHTML = "";
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     for (let i = 0; i < data.length; i++) {
-        createTask(data[i].uuid, data[i].title, timeToString(data[i].timestamp), data[i].details);
+        addTask(data[i].uuid, data[i].title, timeToString(data[i].timestamp), data[i].details);
     }
 }
 
