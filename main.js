@@ -247,14 +247,17 @@ function truncateString(string, length) {
     }
 }
 
-// Migrate data to periodically-data
+// Migrate "data" to "periodically-data"
 document.getElementById("migrate").addEventListener("click", () => {
     let old = localStorage.getItem("data");
     if (old) {
-        localStorage.setItem("periodically-data", old);
-        alert("Success! Refresh the page 🎉");
+        if (confirm("Old data was found, would you like to migrate? (Current data will be overwritten) 🤔")) {
+            alert("Migrated! The page will be refreshed 🎉");
+            localStorage.setItem("periodically-data", old);
+            window.location.reload();
+        }
     }
     else {
-        alert("Couldn't find old data 😭");
+        alert("Unable to find old data 😭");
     }
 });
