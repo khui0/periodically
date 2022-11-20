@@ -98,15 +98,17 @@ document.getElementById("reset").addEventListener("click", () => {
 
 function addTask(uuid, title, date, details) {
     feed.innerHTML += `<div class="card" id="${uuid}">
-        <h3>${title}</h3>
+        <h3 data-task-title="${uuid}"></h3>
         <p>${date}</p>
-        <p>${details}</p>
+        <p data-task-details="${uuid}"></p>
         <div class="button-cluster">
             <button data-delete="${uuid}">Completed</button>
             <button data-countdown="${uuid}">Countdown</button>
             <button data-edit="${uuid}">Edit</button>
         </div>
     </div>`;
+    document.querySelector(`[data-task-title="${uuid}"]`).textContent = title;
+    document.querySelector(`[data-task-details="${uuid}"]`).textContent = details;
     addButtonEvents();
 }
 
