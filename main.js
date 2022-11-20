@@ -3,13 +3,14 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 const status = document.getElementById("status");
 const feed = document.getElementById("feed");
 
-var data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
+let data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
 document.body.className = localStorage.getItem("periodically-theme") || "";
 
 updateTasks();
 updateStatus();
 
 setInterval(updatePastDue, 100);
+let countdown;
 
 document.querySelectorAll("[data-theme]").forEach(item => {
     item.addEventListener("click", () => {
@@ -34,7 +35,11 @@ document.querySelectorAll("[data-open]").forEach(item => {
 
 document.querySelectorAll("[data-close]").forEach(item => {
     item.addEventListener("click", () => {
+        let id = item.getAttribute("data-open");
         document.getElementById(item.getAttribute("data-close")).close();
+        if (id == "countdown") {
+            clearInterval(countdown);
+        }
     });
 });
 
@@ -133,14 +138,24 @@ function addButtonEvents() {
         item.addEventListener("click", () => {
             let uuid = item.getAttribute("data-countdown");
             let task = data.find(item => item.uuid == uuid);
-            // Generate URL
-            let params = new URLSearchParams();
-            params.append("title", task.title);
-            params.append("date", new Date(task.timestamp).toISOString());
-            params.append("accent", "#ffffff");
-            params.append("icon", "📝");
-            // URL may change in the future
-            window.open(`https://khui0.github.io/countdown/?${params.toString()}`, "_blank");
+            let modal = document.getElementById("countdown");
+
+            clearInterval(countdown);
+            countdown = setInterval(updateCountdown, 100);
+            updateCountdown();
+            modal.showModal();
+
+            function updateCountdown() {
+                let time = timeBetween(new Date(task.timestamp).toISOString());
+                let timeStrings = [
+                    pluralize("days", time.days, true),
+                    pluralize("hours", time.hours, true),
+                    pluralize("minutes", time.minutes, true),
+                    pluralize("seconds", time.seconds, true)
+                ];
+                modal.querySelector("h2").textContent = !time.passed ? `${task.title} is due in` : `${task.title} is past due by`;
+                modal.querySelector("p").textContent = timeStrings.join(" ");
+            }
         });
     });
 }

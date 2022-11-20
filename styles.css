@@ -162,6 +162,11 @@ button:hover {
     margin-top: 5px;
 }
 
+#countdown>p {
+    font-size: 1.5em;
+    text-align: center;
+}
+
 dialog[open] {
     display: flex;
     flex-direction: column;
