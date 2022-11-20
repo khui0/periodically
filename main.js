@@ -214,7 +214,7 @@ function updatePastDue() {
 // Converts unix timestamp into string
 function timeToString(timestamp) {
     let date = new Date(timestamp);
-    if (timestamp) {
+    if (date) {
         let month = date.getMonth() + 1;
         let day = date.getDate();
         let year = date.getFullYear();
@@ -231,7 +231,7 @@ function timeToString(timestamp) {
         return `${month}/${day}/${year} ${hours}:${minutes} ${period}`;
     }
     else {
-        return "Timestamp unknown";
+        return "Invalid timestamp";
     }
 }
 
