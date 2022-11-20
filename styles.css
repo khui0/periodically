@@ -162,6 +162,11 @@ button:hover {
     margin-top: 5px;
 }
 
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+
 dialog {
     width: min(80%, 500px);
     padding: 20px;
@@ -192,6 +197,15 @@ dialog button:hover {
 dialog>input,
 dialog>textarea {
     background-color: var(--control-color);
+}
+
+dialog>input+.button-cluster,
+dialog>textarea+.button-cluster {
+    margin-top: 5px;
+}
+
+dialog>hr {
+    width: 100%;
 }
 
 .warning {
