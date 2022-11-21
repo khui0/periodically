@@ -109,6 +109,7 @@ function addTask(uuid, title, date, details) {
     </div>`;
     document.querySelector(`[data-task-title="${uuid}"]`).textContent = title;
     document.querySelector(`[data-task-details="${uuid}"]`).textContent = details;
+    replaceHyperlinks(document.querySelector(`[data-task-details="${uuid}"]`));
     addButtonEvents();
 }
 
@@ -261,6 +262,25 @@ function truncateString(string, length) {
     }
     else {
         return string
+    }
+}
+
+// Makes all hyperlinks in an element clickable
+function replaceHyperlinks(element) {
+    if (element.innerHTML) {
+        let regex = /https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&//=]*/g;
+        // Non matches
+        let p1 = element.innerHTML.split(regex);
+        // Matched URLs
+        let p2 = element.innerHTML.match(regex);
+
+        element.innerHTML = "";
+        for (let i = 0; i < p1.length; i++) {
+            element.innerHTML += p1[i];
+            if (p2[i]) {
+                element.innerHTML += `<a href="${p2[i]}">${p2[i]}</a>`;
+            }
+        }
     }
 }
 
