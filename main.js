@@ -109,7 +109,7 @@ function addTask(uuid, title, date, details) {
     </div>`;
     document.querySelector(`[data-task-title="${uuid}"]`).textContent = title;
     document.querySelector(`[data-task-details="${uuid}"]`).textContent = details;
-    replaceHyperlinks(document.querySelector(`[data-task-details="${uuid}"]`));
+    details && replaceHyperlinks(document.querySelector(`[data-task-details="${uuid}"]`));
     addButtonEvents();
 }
 
@@ -273,11 +273,11 @@ function replaceHyperlinks(element) {
         let p1 = element.innerHTML.split(regex);
         // Matched URLs
         let p2 = element.innerHTML.match(regex);
-
+        
         element.innerHTML = "";
         for (let i = 0; i < p1.length; i++) {
             element.innerHTML += p1[i];
-            if (p2[i]) {
+            if (i < p1.length - 1) {
                 element.innerHTML += `<a href="${p2[i]}">${p2[i]}</a>`;
             }
         }
