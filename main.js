@@ -270,9 +270,9 @@ function replaceHyperlinks(element) {
     if (element.innerHTML) {
         let regex = /https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&//=]*/g;
         // Non matches
-        let p1 = element.innerHTML.split(regex);
+        let p1 = element.innerHTML.replaceAll("&amp;", "&").split(regex);
         // Matched URLs
-        let p2 = element.innerHTML.match(regex);
+        let p2 = element.innerHTML.replaceAll("&amp;", "&").match(regex);
         
         element.innerHTML = "";
         for (let i = 0; i < p1.length; i++) {
