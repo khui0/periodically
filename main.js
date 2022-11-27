@@ -273,7 +273,7 @@ function replaceHyperlinks(element) {
         let p1 = element.innerHTML.replaceAll("&amp;", "&").split(regex);
         // Matched URLs
         let p2 = element.innerHTML.replaceAll("&amp;", "&").match(regex);
-        
+
         element.innerHTML = "";
         for (let i = 0; i < p1.length; i++) {
             element.innerHTML += p1[i];
