@@ -31,11 +31,12 @@
 .theme-blizzard {
     color-scheme: light;
     --text-color: #242424;
-    --background-color: #d7f1ff;
-    --surface-color: #c0e2f5;
-    --control-color: #a2cfe9;
+    --background-color: #cde7f5;
+    --surface-color: #b3d5e9;
+    --control-color: #95bcd3;
     --accent-color: #71b2d3;
     --accent-text-color: #242424;
+    --error-color: #b42222;
 }
 
 .theme-sage {
@@ -46,6 +47,7 @@
     --control-color: #8aa27c;
     --accent-color: #5c8a5b;
     --accent-text-color: #242424;
+    --error-color: #b42222;
 }
 
 .theme-dune {
@@ -56,6 +58,7 @@
     --control-color: #a3977c;
     --accent-color: #917856;
     --accent-text-color: #242424;
+    --error-color: #b42222;
 }
 
 .theme-rose {
@@ -66,6 +69,7 @@
     --control-color: #c7a8a5;
     --accent-color: #ae817c;
     --accent-text-color: #242424;
+    --error-color: #b42222;
 }
 
 .theme-lavender {
@@ -76,16 +80,17 @@
     --control-color: #a19bd1;
     --accent-color: #7e78be;
     --accent-text-color: #242424;
+    --error-color: #b42222;
 }
 
 /* Seasonal */
 
 .theme-festive {
     color-scheme: light;
-    --text-color: #383128;
-    --background-color: #f5d6a7;
-    --surface-color: #ceaf82;
-    --control-color: #af946a;
+    --text-color: #41382d;
+    --background-color: #f1e2cc;
+    --surface-color: #dbc8ab;
+    --control-color: #b9a68a;
     --accent-color: #c72c3a;
     --accent-text-color: #4b0000;
     --error-color: #940000;
@@ -107,7 +112,7 @@ body.theme-festive::after {
     --background-color: #f1faff;
     --surface-color: #ceeafc;
     --control-color: #aed8f0;
-    --accent-color: #4fc4ff;
+    --accent-color: #5ec9ff;
     --accent-text-color: #414141;
 }
 
