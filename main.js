@@ -78,23 +78,29 @@ document.getElementById("task-submit").addEventListener("click", e => {
     }
 });
 
-document.getElementById("reset-tasks").addEventListener("click", () => {
-    if (confirm("All tasks will be deleted. Would you like to continue?")) {
-        localStorage.removeItem("periodically-data");
-    }
-});
-
-document.getElementById("reset-theme").addEventListener("click", () => {
-    alert("Theme has been reset. Refresh to see changes 🦋");
-    localStorage.removeItem("periodically-theme");
-});
-
-document.getElementById("reset").addEventListener("click", () => {
-    if (confirm("All user data will be deleted. Would you like to continue?")) {
-        localStorage.removeItem("periodically-data");
-        localStorage.removeItem("periodically-theme");
-        localStorage.removeItem("periodically-seen-buttons");
-    }
+document.querySelectorAll("[data-reset]").forEach(button => {
+    button.addEventListener("click", () => {
+        switch (button.getAttribute("data-reset")) {
+            case "tasks":
+                if (confirm("Would you like to remove all tasks? This cannot be undone.")) {
+                    localStorage.removeItem("periodically-data");
+                    alert("Tasks have been reset. Refresh to see changes 🗑️");
+                }
+                break;
+            case "theme":
+                localStorage.removeItem("periodically-theme");
+                alert("Theme has been reset. Refresh to see changes 🦋");
+                break;
+            case "all":
+                if (confirm("Would you like to reset all settings and data? This cannot be undone.")) {
+                    localStorage.removeItem("periodically-data");
+                    localStorage.removeItem("periodically-theme");
+                    localStorage.removeItem("periodically-seen-buttons");
+                    alert("All settings and data have been reset 🧼");
+                }
+                break;
+        }
+    });
 });
 
 function addTask(uuid, title, date, details) {
