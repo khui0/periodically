@@ -93,6 +93,7 @@ document.getElementById("reset").addEventListener("click", () => {
     if (confirm("All user data will be deleted. Would you like to continue?")) {
         localStorage.removeItem("periodically-data");
         localStorage.removeItem("periodically-theme");
+        localStorage.removeItem("periodically-seen-buttons");
     }
 });
 
@@ -297,4 +298,18 @@ document.getElementById("migrate").addEventListener("click", () => {
     else {
         alert("Unable to find old data 😭");
     }
+});
+
+// Hide "NEW" tag on buttons after first click
+let seenButtons = JSON.parse(localStorage.getItem("periodically-seen-buttons") || "[]");
+document.querySelectorAll("button[data-new]").forEach(button => {
+    let id = button.getAttribute("data-new");
+    if (seenButtons.includes(id)) {
+        button.removeAttribute("data-new");
+    }
+    button.addEventListener("click", () => {
+        button.removeAttribute("data-new");
+        seenButtons.push(id);
+        localStorage.setItem("periodically-seen-buttons", JSON.stringify(seenButtons));
+    });
 });
