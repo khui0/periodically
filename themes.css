@@ -126,3 +126,29 @@ body.theme-winter>dialog::after {
     background-repeat: repeat-x;
     pointer-events: none;
 }
+
+/* Special */
+
+.theme-outcast {
+    color-scheme: dark;
+    --text-color: #ffffff;
+    --background-color: #000000;
+    --surface-color: #050505;
+    --control-color: #050505;
+    --accent-color: #ffffff;
+    --accent-text-color: #000000;
+    --error-color: #b31225;
+    --attention-color: #b31225;
+}
+
+.theme-outcast :is(input, textarea, button, dialog, .card) {
+    border: 2px solid #141414;
+}
+
+.theme-outcast dialog {
+    background: repeating-linear-gradient(90deg, #050505 0 25px, #141414 0 50px);
+}
+
+.theme-outcast hr {
+    border-color: var(--text-color);
+}
