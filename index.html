@@ -26,6 +26,7 @@
         <h1 id="status"></h1>
         <div class="button-cluster">
             <button data-open="task">Add</button>
+            <button data-open="export">Export</button>
             <button data-open="options" data-new="100">Options</button>
             <button data-open="info">Info</button>
         </div>
@@ -93,6 +94,16 @@
         <p></p>
         <div class="button-cluster right">
             <button data-close="countdown">Close</button>
+        </div>
+    </dialog>
+    <dialog id="export">
+        <h2>Export tasks</h2>
+        <textarea id="data-string" rows="10" readonly></textarea>
+        <div class="button-cluster">
+            <button id="copy-data-string">Copy</button>
+        </div>
+        <div class="button-cluster right">
+            <button data-close="export">Close</button>
         </div>
     </dialog>
     <!-- Scripts -->

@@ -319,3 +319,26 @@ document.querySelectorAll("button[data-new]").forEach(button => {
         localStorage.setItem("periodically-seen-buttons", JSON.stringify(seenButtons));
     });
 });
+
+// Converts tasks into a string which can be shared elsewhere
+function exportData() {
+    let result = [];
+    data.forEach((task, i) => {
+        let string = `${i + 1}. ${task.title.trim()} (${timeToString(task.timestamp)})`;
+        task.details.split("\n").forEach(line => {
+            if (line) {
+                string += `\n\t${line.trim()}`;
+            }
+        });
+        result.push(string);
+    });
+    return result.join("\n\n");
+}
+
+document.querySelector("[data-open=export]").addEventListener("click", () => {
+    document.getElementById("data-string").value = exportData();
+});
+
+document.getElementById("copy-data-string").addEventListener("click", () => {
+    navigator.clipboard.writeText(exportData());
+});
