@@ -147,6 +147,7 @@ body.theme-winter>dialog::after {
 
 .theme-outcast dialog {
     background: repeating-linear-gradient(90deg, #050505 0 25px, #141414 0 50px);
+    box-shadow: 0 0 20px #050505 inset;
 }
 
 .theme-outcast hr {

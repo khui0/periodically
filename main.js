@@ -109,7 +109,7 @@ function addTask(uuid, title, date, details) {
         <p>${date}</p>
         <p data-task-details="${uuid}"></p>
         <div class="button-cluster">
-            <button data-delete="${uuid}">Completed</button>
+            <button data-delete="${uuid}">Complete</button>
             <button data-countdown="${uuid}">Countdown</button>
             <button data-edit="${uuid}">Edit</button>
         </div>
