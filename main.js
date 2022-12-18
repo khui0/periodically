@@ -60,14 +60,11 @@ document.getElementById("task-submit").addEventListener("click", e => {
     if (title?.trim() && date?.trim()) {
         if (!e.target.getAttribute("data-uuid")) {
             let uuid = uuidv4();
-            storeTask(uuid, title, timestamp, details);
+            createTask(uuid, title, timestamp, details);
         }
         else {
             let uuid = e.target.getAttribute("data-uuid");
-            // Removes old task from data object and localStorage
-            data = data.filter(item => item.uuid != uuid);
-            localStorage.setItem("periodically-data", JSON.stringify(data));
-            storeTask(uuid, title, timestamp, details);
+            editTask(uuid, title, timestamp, details);
         }
         updateTasks();
         updateStatus();
@@ -103,7 +100,7 @@ document.querySelectorAll("[data-reset]").forEach(button => {
     });
 });
 
-function addTask(uuid, title, date, details) {
+function appendTask(uuid, title, date, details) {
     feed.innerHTML += `<div class="card" id="${uuid}">
         <h3 data-task-title="${uuid}"></h3>
         <p>${date}</p>
@@ -122,8 +119,8 @@ function addTask(uuid, title, date, details) {
 
 function addButtonEvents() {
     document.querySelectorAll("[data-delete]").forEach(item => {
-        item.addEventListener("click", () => {
-            let uuid = item.getAttribute("data-delete");
+        item.addEventListener("click", e => {
+            let uuid = e.target.getAttribute("data-delete");
             let task = data.find(item => item.uuid == uuid);
             if (confirm(`Would you like to mark "${truncateString(task.title, 20)}" as completed? 🥳`)) {
                 // Remove item from DOM
@@ -136,8 +133,8 @@ function addButtonEvents() {
         });
     });
     document.querySelectorAll("[data-edit]").forEach(item => {
-        item.addEventListener("click", () => {
-            let uuid = item.getAttribute("data-edit");
+        item.addEventListener("click", e => {
+            let uuid = e.target.getAttribute("data-edit");
             let task = data.find(item => item.uuid == uuid);
             setTaskModal("Edit task", "Save", uuid, [task.title, timeToISO(task.timestamp), task.details]);
             document.getElementById("task").showModal();
@@ -145,8 +142,8 @@ function addButtonEvents() {
         });
     });
     document.querySelectorAll("[data-countdown]").forEach(item => {
-        item.addEventListener("click", () => {
-            let uuid = item.getAttribute("data-countdown");
+        item.addEventListener("click", e => {
+            let uuid = e.target.getAttribute("data-countdown");
             let task = data.find(item => item.uuid == uuid);
             let modal = document.getElementById("countdown");
 
@@ -181,7 +178,7 @@ function setTaskModal(title = "Add task", action = "Add", uuid = "", fields = ["
     submit.setAttribute("data-uuid", uuid);
 }
 
-function storeTask(uuid, title, timestamp, details) {
+function createTask(uuid, title, timestamp, details) {
     let item = {
         "uuid": uuid,
         "title": title,
@@ -192,11 +189,23 @@ function storeTask(uuid, title, timestamp, details) {
     localStorage.setItem("periodically-data", JSON.stringify(data));
 }
 
+function editTask(uuid, title, timestamp, details) {
+    let item = {
+        "uuid": uuid,
+        "title": title,
+        "timestamp": timestamp,
+        "details": details
+    };
+    let index = data.findIndex(item => item.uuid == uuid);
+    data[index] = item;
+    localStorage.setItem("periodically-data", JSON.stringify(data));
+}
+
 function updateTasks() {
     feed.innerHTML = "";
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     for (let i = 0; i < data.length; i++) {
-        addTask(data[i].uuid, data[i].title, timeToString(data[i].timestamp), data[i].details);
+        appendTask(data[i].uuid, data[i].title, timeToString(data[i].timestamp), data[i].details);
     }
 }
 
