@@ -57,21 +57,26 @@ document.getElementById("task-submit").addEventListener("click", e => {
     let details = modal.querySelector("[data-details]").value;
 
     let timestamp = new Date(date).getTime();
-    if (title?.trim() && date?.trim()) {
-        if (!e.target.getAttribute("data-uuid")) {
-            let uuid = uuidv4();
-            createTask(uuid, title, timestamp, details);
+    if (title?.trim()) {
+        if (date?.trim()) {
+            if (!e.target.getAttribute("data-uuid")) {
+                let uuid = uuidv4();
+                createTask(uuid, title, timestamp, details);
+            }
+            else {
+                let uuid = e.target.getAttribute("data-uuid");
+                editTask(uuid, title, timestamp, details);
+            }
+            updateTasks();
+            updateStatus();
+            document.getElementById("task").close();
         }
         else {
-            let uuid = e.target.getAttribute("data-uuid");
-            editTask(uuid, title, timestamp, details);
+            alert("Due date is missing 😢");
         }
-        updateTasks();
-        updateStatus();
-        document.getElementById("task").close();
     }
     else {
-        alert("Title and date can't be empty 🤔");
+        alert("Title can't be empty 🤔");
     }
 });
 
