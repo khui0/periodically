@@ -210,7 +210,7 @@ function updateTasks() {
     feed.innerHTML = "";
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     for (let i = 0; i < data.length; i++) {
-        appendTask(data[i].uuid, data[i].title, timeToString(data[i].timestamp), data[i].details);
+        appendTask(data[i].uuid, data[i].title, timeToStringWithContext(data[i].timestamp), data[i].details);
     }
 }
 
@@ -231,6 +231,49 @@ function updatePastDue() {
             document.getElementById(data[i].uuid).querySelector("p").className = "warning";
         }
     }
+}
+
+// Converts unix timestamp into string
+function timeToStringWithContext(timestamp) {
+    let date = new Date(timestamp);
+    if (timestamp) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let year = date.getFullYear();
+        let hours = date.getHours();
+        let minutes = date.getMinutes().toString().padStart(2, "0");
+        let period;
+        if (hours > 12) {
+            hours %= 12;
+            period = "PM";
+        }
+        else {
+            period = "AM";
+        }
+        if (hours == 0) {
+            hours = 12;
+        }
+        if (isToday(timestamp)) {
+            return `Today at ${hours}:${minutes} ${period}`;
+        }
+        else {
+            return `${month}/${day}/${year} ${hours}:${minutes} ${period}`;
+        }
+    }
+    else {
+        return "Invalid timestamp";
+    }
+}
+
+function isToday(timestamp) {
+    let target = new Date(timestamp);
+    let today = new Date();
+    let comparisons = [
+        target.getFullYear() == today.getFullYear(),
+        target.getMonth() == today.getMonth(),
+        target.getDate() == today.getDate()
+    ]
+    return comparisons.every(value => value);
 }
 
 // Converts unix timestamp into string
@@ -266,7 +309,7 @@ function timeToISO(timestamp) {
     let year = date.getFullYear();
     let month = (date.getMonth() + 1).toString().padStart(2, "0");
     let day = date.getDate().toString().padStart(2, "0");
-    let hours = date.getHours();
+    let hours = date.getHours().toString().padStart(2, "0");
     let minutes = date.getMinutes().toString().padStart(2, "0");
     return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
