@@ -384,7 +384,7 @@ document.querySelectorAll("button[data-new]").forEach(button => {
 function exportData() {
     let result = [];
     data.forEach((task, i) => {
-        let string = `${i + 1}. ${task.title.trim()} (${timeToString(task.timestamp)})`;
+        let string = `${i + 1}. ${task.title.trim()}`;
         task.details.split("\n").forEach(line => {
             if (line) {
                 string += `\n\t${line.trim()}`;
