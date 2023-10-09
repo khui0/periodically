@@ -1,44 +1,23 @@
 :root {
     color-scheme: dark;
     --text-color: #ffffff;
-    --background-color: #32383f;
-    --surface-color: #444c56;
-    --control-color: #5e6977;
+    --background-color: #161616;
+    --surface-color: #333333;
     --accent-color: #059fff;
     --accent-text-color: #ffffff;
-    --error-color: #f84747;
-    --attention-color: #f84747;
-    --attention-text-color: #ffffff;
+    --error-color: #fa8796;
 }
 
-html,
-body {
-    overflow: hidden;
-    height: 100%;
+* {
+    color: inherit;
+    background-color: inherit;
 }
 
-html {
-    font: 16px "Poppins", sans-serif;
-    -webkit-text-size-adjust: 100%;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 20px;
-    color: var(--text-color);
-    background-color: var(--background-color);
-}
-
-:focus {
+:focus-visible {
+    z-index: 1;
     outline: none;
-    box-shadow: 0 0 0 2px var(--accent-color);
-    transition: box-shadow 100ms ease-in-out;
+    box-shadow: 0 0 0 0.125rem var(--accent-color);
+    transition: box-shadow 100ms ease;
 }
 
 ::placeholder {
@@ -46,197 +25,119 @@ body {
     opacity: 0.5;
 }
 
-::selection {
-    color: var(--accent-text-color);
-    background-color: var(--accent-color);
+body {
+    height: 100%;
+    padding: 1rem;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    font: 16px "Poppins", sans-serif;
+    line-height: 1.5;
 }
 
-h1,
+h1 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+}
+
 h2,
 h3,
 h4,
 h5,
-h6,
-p {
-    margin: 0;
+h6 {
+    font-size: 1.5rem;
+    line-height: 1.2;
 }
 
-a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-hr {
-    border: 1px solid var(--control-color);
-    box-sizing: border-box;
-}
-
-input,
-textarea {
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    resize: none;
-    border: none;
-    border-radius: 8px;
-    color: inherit;
-    background-color: var(--surface-color);
-    font: inherit;
+label {
+    display: flex;
+    flex-direction: column;
 }
 
 button {
-    height: 2.5em;
-    margin: 0;
-    padding: 0 1em;
+    height: 2.25em;
+    padding: 0 0.75em;
     border: none;
-    border-radius: 8px;
-    color: var(--text-color);
+    border-radius: 0.5rem;
     background-color: var(--surface-color);
     font: inherit;
 }
 
-button:hover {
-    color: var(--accent-text-color);
-    background-color: var(--accent-color);
-}
-
-.button-cluster {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-.button-cluster+.button-cluster {
-    margin-top: 5px;
-}
-
-.button-cluster.right {
-    justify-content: right;
-}
-
-.header {
-    flex: 0 0 auto;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: space-between;
-}
-
-.header button {
-    height: 3em;
-}
-
-#feed {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow: auto;
-    border-radius: 8px;
-}
-
-.card {
-    flex: 0 0 auto;
-    height: fit-content;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: var(--surface-color);
-    -webkit-user-select: text;
-    user-select: text;
-}
-
-.card>h3 {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.card>p {
-    max-height: 150px;
-    word-break: break-all;
-    white-space: pre-wrap;
-    overflow: auto;
-}
-
-.card>.button-cluster {
-    margin-top: 5px;
-}
-
-#countdown>p {
-    font-size: 1.5em;
-    text-align: center;
-}
-
-dialog[open] {
-    display: flex;
-    flex-direction: column;
-}
-
-dialog {
-    width: min(80%, 500px);
-    padding: 20px;
+input,
+select {
+    height: 2.25em;
+    padding: 0 0.75em;
     border: none;
-    border-radius: 8px;
-    color: var(--text-color);
+    border-radius: 0.5rem;
     background-color: var(--surface-color);
-    -webkit-user-select: none;
-    user-select: none;
 }
 
-dialog::backdrop {
-    background-color: black;
-    opacity: 0.25;
+textarea {
+    padding: 0.375em 0.75em;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--surface-color);
+    resize: none;
 }
 
-.card button,
-dialog button {
-    background-color: var(--control-color);
+@media (hover: hover) {
+    button:hover {
+        color: var(--accent-text-color);
+        background-color: var(--accent-color);
+    }
+
+    label:hover+button {
+        background-color: var(--surface-color);
+    }
 }
 
-.card button:hover,
-dialog button:hover {
-    color: var(--accent-text-color);
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    width: fit-content;
+    flex-wrap: wrap;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* GoGuardian */
+
+[data-gg-chat-anchor],
+[data-gg-privacy-banner-anchor] {
+    display: none !important;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    border: 0.25rem solid transparent;
+    background-color: var(--surface-color);
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
     background-color: var(--accent-color);
 }
 
-dialog>input,
-dialog>textarea {
-    background-color: var(--control-color);
-}
-
-dialog>input+.button-cluster,
-dialog>textarea+.button-cluster {
-    margin-top: 5px;
-}
-
-dialog>hr {
-    width: 100%;
-}
-
-.warning {
-    color: var(--error-color);
-}
-
-button[data-new] {
-    position: relative;
-}
-
-button[data-new]::after {
-    content: "NEW";
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    transform: translate(20%, -20%);
-    padding: 0.2em 0.4em;
-    border-radius: 0.5em;
-    color: var(--attention-text-color);
-    background-color: var(--attention-color);
-    font-size: 0.75rem;
-    font-weight: 600;
-    pointer-events: none;
+::-webkit-scrollbar-corner {
+    background-color: var(--background-color);
 }

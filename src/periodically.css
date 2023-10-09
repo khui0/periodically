@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 800px);
+    margin: 0 auto;
+}
+
+button {
+    transition: 100ms background-color cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+button.icon {
+    width: 2.25em;
+    padding: 0;
+    border-radius: 100vh;
+}
+
+#status {
+    margin-bottom: 1rem;
+}
+
+#feed {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+}
+
+#feed>div {
+    position: relative;
+    width: 100%;
+}
+
+#feed>div>p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#feed>div>.controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: transparent;
+    opacity: 0;
+    font-size: 20px;
+    transition: 100ms opacity cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+#feed>div:hover>.controls,
+#feed>div.hover>.controls {
+    opacity: 1;
+}
+
+#bar {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#create-input {
+    flex: 1;
+    min-width: 0;
+    border-radius: 100vh;
+}

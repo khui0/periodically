@@ -1,131 +1,95 @@
 import "./reset.css";
 import "./style.css";
-import "./themes.css";
+import "./periodically.css";
 import "remixicon/fonts/remixicon.css";
 
 import { v4 as uuidv4 } from "uuid";
 import pluralize from "pluralize";
-import { timeUntil } from "./countdown.js";
+import * as time from "./time.js";
+import * as ui from "./ui.js";
 
-const status = document.getElementById("status");
 const feed = document.getElementById("feed");
 
 let data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
 document.body.className = localStorage.getItem("periodically-theme") || "";
 
+console.log(data);
+
 updateTasks();
-updateStatus();
 
 setInterval(updatePastDue, 100);
-let countdown;
 
-document.querySelectorAll("[data-theme]").forEach(item => {
-    item.addEventListener("click", () => {
-        let value = item.getAttribute("data-theme");
-        document.body.className = value;
-        localStorage.setItem("periodically-theme", value);
-    });
+document.getElementById("create-input").addEventListener("keydown", e => {
+    if (e.key != "Enter") {
+        return;
+    }
+    // Transfer title to modal
+    document.getElementById("title").value = e.target.value;
+    e.target.value = "";
+    // Set default date
+    document.getElementById("date").value = time.endOfToday();
+    // Show modal
+    ui.show(document.getElementById("create-modal"), "Create", [
+        {
+            text: "Cancel",
+            close: true,
+        },
+        {
+            text: "Create",
+            close: true,
+            onclick: createTask,
+        },
+    ]);
 });
 
-document.querySelectorAll("[data-open]").forEach(item => {
-    item.addEventListener("click", () => {
-        let id = item.getAttribute("data-open");
-        document.getElementById(id).showModal();
-        if (id != "task") {
-            document.getElementById(id).querySelector("button[data-close]").focus();
-        }
-        else {
-            setTaskModal();
-        }
-    });
-});
-
-document.querySelectorAll("[data-close]").forEach(item => {
-    item.addEventListener("click", () => {
-        let id = item.getAttribute("data-open");
-        document.getElementById(item.getAttribute("data-close")).close();
-        if (id == "countdown") {
-            clearInterval(countdown);
-        }
-    });
-});
-
-// Keybord shortcut to submit task
-document.getElementById("task").addEventListener("keydown", e => {
+// Create task on Ctrl + Enter
+document.getElementById("title").addEventListener("keydown", e => {
     if (e.ctrlKey && e.key == "Enter") {
-        document.getElementById("task-submit").click();
+        createTask();
     }
 });
 
-document.getElementById("task-submit").addEventListener("click", e => {
-    let modal = document.getElementById("task");
-    let title = modal.querySelector("[data-title]").value;
-    let date = modal.querySelector("[data-date]").value;
-    let details = modal.querySelector("[data-details]").value;
-
-    let timestamp = new Date(date).getTime();
-    if (title?.trim()) {
-        if (date?.trim()) {
-            if (!e.target.getAttribute("data-uuid")) {
-                let uuid = uuidv4();
-                createTask(uuid, title, timestamp, details);
-            }
-            else {
-                let uuid = e.target.getAttribute("data-uuid");
-                editTask(uuid, title, timestamp, details);
-            }
-            updateTasks();
-            updateStatus();
-            document.getElementById("task").close();
-        }
-        else {
-            alert("Due date is missing 😢");
-        }
+function createTask() {
+    const title = document.getElementById("title").value;
+    const details = document.getElementById("details").value;
+    const date = document.getElementById("date").value;
+    if (title?.trim() && date?.trim()) {
+        setTask(title, details, date);
+        updateTasks();
+        document.getElementById("create-modal").close();
     }
-    else {
-        alert("Title can't be empty 🤔");
-    }
-});
+}
 
-document.querySelectorAll("[data-reset]").forEach(button => {
-    button.addEventListener("click", () => {
-        switch (button.getAttribute("data-reset")) {
-            case "tasks":
-                if (confirm("Would you like to remove all tasks? This cannot be undone.")) {
-                    localStorage.removeItem("periodically-data");
-                    alert("Tasks have been reset. Refresh to see changes 🗑️");
-                }
-                break;
-            case "theme":
-                localStorage.removeItem("periodically-theme");
-                alert("Theme has been reset. Refresh to see changes 🦋");
-                break;
-            case "all":
-                if (confirm("Would you like to reset all settings and data? This cannot be undone.")) {
-                    localStorage.removeItem("periodically-data");
-                    localStorage.removeItem("periodically-theme");
-                    localStorage.removeItem("periodically-seen-buttons");
-                    alert("All settings and data have been reset 🧼");
-                }
-                break;
-        }
-    });
-});
+function setTask(title, details, timestamp, uuid) {
+    const item = {
+        "title": title.trim(),
+        "details": details.trim(),
+        "timestamp": timestamp || Date.now(),
+        "uuid": uuid || uuidv4(),
+    };
+    // Remove item with same uuid
+    const existing = data.findIndex(item => item.uuid == uuid);
+    if (existing != -1) {
+        data.splice(existing, 1);
+    }
+    // Add new item to array
+    data.push(item);
+    localStorage.setItem("periodically-data", JSON.stringify(data));
+    return item.uuid;
+}
 
 function appendTask(uuid, title, date, details) {
-    feed.innerHTML += `<div class="card" id="${uuid}">
-        <h3 data-task-title="${uuid}"></h3>
-        <p>${date}</p>
-        <p data-task-details="${uuid}"></p>
-        <div class="button-cluster">
-            <button data-delete="${uuid}">Complete</button>
-            <button data-countdown="${uuid}">Countdown</button>
-            <button data-edit="${uuid}">Edit</button>
-        </div>
-    </div>`;
-    document.querySelector(`[data-task-title="${uuid}"]`).textContent = title;
-    document.querySelector(`[data-task-details="${uuid}"]`).textContent = details;
-    details && replaceHyperlinks(document.querySelector(`[data-task-details="${uuid}"]`));
+    const task = document.createElement("div");
+    task.setAttribute("data-uuid", uuid);
+    task.innerHTML = `<h2>${title}</h2>
+<p>${date}</p>
+<p>${details}</p>
+<div class="controls">
+    <button class="icon" data-complete="${uuid}"><i class="ri-check-fill"></i></button>
+    <button class="icon" data-edit="${uuid}"><i class="ri-pencil-fill"></i></button>
+    <button class="icon" data-delete="${uuid}"><i class="ri-delete-bin-6-fill"></i></button>
+</div>`;
+    feed.append(task);
     addButtonEvents();
 }
 
@@ -153,81 +117,13 @@ function addButtonEvents() {
             updateStatus();
         });
     });
-    document.querySelectorAll("[data-countdown]").forEach(item => {
-        item.addEventListener("click", e => {
-            let uuid = e.target.getAttribute("data-countdown");
-            let task = data.find(item => item.uuid == uuid);
-            let modal = document.getElementById("countdown");
-
-            clearInterval(countdown);
-            countdown = setInterval(updateCountdown, 100);
-            updateCountdown();
-            modal.showModal();
-
-            function updateCountdown() {
-                let time = timeUntil(new Date(task.timestamp).toISOString());
-                let timeStrings = [
-                    pluralize("days", time.days, true),
-                    pluralize("hours", time.hours, true),
-                    pluralize("minutes", time.minutes, true),
-                    pluralize("seconds", time.seconds, true)
-                ];
-                modal.querySelector("h2").textContent = !time.passed ? `${task.title} is due in` : `${task.title} is past due by`;
-                modal.querySelector("p").textContent = timeStrings.join(" ");
-            }
-        });
-    });
-}
-
-function setTaskModal(title = "Add task", action = "Add", uuid = "", fields = ["", endOfToday(), ""]) {
-    let modal = document.getElementById("task");
-    let submit = document.getElementById("task-submit");
-    modal.querySelector("h2").textContent = title;
-    modal.querySelector("[data-title]").value = fields[0];
-    modal.querySelector("[data-date]").value = fields[1];
-    modal.querySelector("[data-details]").value = fields[2];
-    submit.textContent = action;
-    submit.setAttribute("data-uuid", uuid);
-}
-
-function createTask(uuid, title, timestamp, details) {
-    let item = {
-        "uuid": uuid,
-        "title": title,
-        "timestamp": timestamp,
-        "details": details
-    };
-    data.push(item);
-    localStorage.setItem("periodically-data", JSON.stringify(data));
-}
-
-function editTask(uuid, title, timestamp, details) {
-    let item = {
-        "uuid": uuid,
-        "title": title,
-        "timestamp": timestamp,
-        "details": details
-    };
-    let index = data.findIndex(item => item.uuid == uuid);
-    data[index] = item;
-    localStorage.setItem("periodically-data", JSON.stringify(data));
 }
 
 function updateTasks() {
     feed.innerHTML = "";
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     for (let i = 0; i < data.length; i++) {
-        appendTask(data[i].uuid, data[i].title, timeToStringWithContext(data[i].timestamp), data[i].details);
-    }
-}
-
-function updateStatus() {
-    let amount = data.length;
-    if (amount == 1) {
-        status.textContent = `${amount} task remaining`;
-    }
-    else {
-        status.textContent = `${amount} tasks remaining`;
+        appendTask(data[i].uuid, data[i].title, time.timeToString(data[i].timestamp), data[i].details);
     }
 }
 
@@ -240,96 +136,7 @@ function updatePastDue() {
     }
 }
 
-// Converts unix timestamp into string
-function timeToStringWithContext(timestamp) {
-    let date = new Date(timestamp);
-    if (timestamp) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let year = date.getFullYear();
-        let hours = date.getHours();
-        let minutes = date.getMinutes().toString().padStart(2, "0");
-        let period;
-        if (hours > 12) {
-            hours %= 12;
-            period = "PM";
-        }
-        else {
-            period = "AM";
-        }
-        if (hours == 0) {
-            hours = 12;
-        }
-        if (isToday(timestamp)) {
-            return `Today at ${hours}:${minutes} ${period}`;
-        }
-        else {
-            return `${month}/${day}/${year} ${hours}:${minutes} ${period}`;
-        }
-    }
-    else {
-        return "Invalid timestamp";
-    }
-}
-
-function isToday(timestamp) {
-    let target = new Date(timestamp);
-    let today = new Date();
-    let comparisons = [
-        target.getFullYear() == today.getFullYear(),
-        target.getMonth() == today.getMonth(),
-        target.getDate() == today.getDate()
-    ]
-    return comparisons.every(value => value);
-}
-
-// Converts unix timestamp into string
-function timeToString(timestamp) {
-    let date = new Date(timestamp);
-    if (timestamp) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let year = date.getFullYear();
-        let hours = date.getHours();
-        let minutes = date.getMinutes().toString().padStart(2, "0");
-        let period;
-        if (hours > 12) {
-            hours %= 12;
-            period = "PM";
-        }
-        else {
-            period = "AM";
-        }
-        if (hours == 0) {
-            hours = 12;
-        }
-        return `${month}/${day}/${year} ${hours}:${minutes} ${period}`;
-    }
-    else {
-        return "Invalid timestamp";
-    }
-}
-
-// Converts date into ISO format for use in datetime-local input
-function timeToISO(timestamp) {
-    let date = new Date(timestamp);
-    let year = date.getFullYear();
-    let month = (date.getMonth() + 1).toString().padStart(2, "0");
-    let day = date.getDate().toString().padStart(2, "0");
-    let hours = date.getHours().toString().padStart(2, "0");
-    let minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-
-// Returns 11:59 PM in ISO format
-function endOfToday() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = (date.getMonth() + 1).toString().padStart(2, "0");
-    let day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}T23:59`;
-}
-
+// Truncate string with an ellipsis
 function truncateString(string, length) {
     if (string.length > length) {
         return string.substring(0, length) + "...";
@@ -339,15 +146,12 @@ function truncateString(string, length) {
     }
 }
 
-// Makes all hyperlinks in an element clickable
-function replaceHyperlinks(element) {
+// Detect links and replace them with anchor elements
+function insertAnchors(element) {
     if (element.innerHTML) {
         let regex = /https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&//=]*/g;
-        // Non matches
         let p1 = element.innerHTML.replaceAll("&amp;", "&").split(regex);
-        // Matched URLs
         let p2 = element.innerHTML.replaceAll("&amp;", "&").match(regex);
-
         element.innerHTML = "";
         for (let i = 0; i < p1.length; i++) {
             element.innerHTML += p1[i];
@@ -357,55 +161,3 @@ function replaceHyperlinks(element) {
         }
     }
 }
-
-// Migrate "data" to "periodically-data"
-document.getElementById("migrate").addEventListener("click", () => {
-    let old = localStorage.getItem("data");
-    if (old) {
-        if (confirm("Old data was found, would you like to migrate? (Current data will be overwritten) 🤔")) {
-            alert("Migrated! The page will be refreshed 🎉");
-            localStorage.setItem("periodically-data", old);
-            window.location.reload();
-        }
-    }
-    else {
-        alert("Unable to find old data 😭");
-    }
-});
-
-// Hide "NEW" tag on buttons after first click
-let seenButtons = JSON.parse(localStorage.getItem("periodically-seen-buttons") || "[]");
-document.querySelectorAll("button[data-new]").forEach(button => {
-    let id = button.getAttribute("data-new");
-    if (seenButtons.includes(id)) {
-        button.removeAttribute("data-new");
-    }
-    button.addEventListener("click", () => {
-        button.removeAttribute("data-new");
-        seenButtons.push(id);
-        localStorage.setItem("periodically-seen-buttons", JSON.stringify(seenButtons));
-    });
-});
-
-// Converts tasks into a string which can be shared elsewhere
-function exportData() {
-    let result = [];
-    data.forEach((task, i) => {
-        let string = `${i + 1}. ${task.title.trim()}`;
-        task.details.split("\n").forEach(line => {
-            if (line) {
-                string += `\n\t${line.trim()}`;
-            }
-        });
-        result.push(string);
-    });
-    return result.join("\n\n");
-}
-
-document.querySelector("[data-open=export]").addEventListener("click", () => {
-    document.getElementById("data-string").value = exportData();
-});
-
-document.getElementById("copy-data-string").addEventListener("click", () => {
-    navigator.clipboard.writeText(exportData());
-});

@@ -16,88 +16,26 @@
 </head>
 
 <body>
-    <div class="header">
-        <h1 id="status"></h1>
-        <div class="button-cluster">
-            <button data-open="task">Add</button>
-            <button data-open="export">Export</button>
-            <button data-open="options" data-new="200">Options</button>
-            <button data-open="info">Info</button>
-        </div>
-    </div>
+    <h1 id="status">0 tasks remaining</h1>
     <div id="feed"></div>
-    <dialog id="task">
-        <h2></h2>
-        <p>Title</p>
-        <input type="text" autocomplete="off" data-title>
-        <p>Details</p>
-        <textarea rows="8" data-details></textarea>
-        <p>Due date</p>
-        <input type="datetime-local" data-date>
-        <div class="button-cluster right">
-            <button data-close="task">Close</button>
-            <button id="task-submit"></button>
-        </div>
-    </dialog>
-    <dialog id="options">
-        <h2>Options</h2>
-        <p>Themes</p>
-        <div class="button-cluster">
-            <button data-theme="">Classic</button>
-            <button data-theme="theme-abyss">Abyss</button>
-            <button data-theme="theme-graphite">Graphite</button>
-            <button data-theme="theme-ghost">Ghost</button>
-            <button data-theme="theme-blizzard">Blizzard</button>
-            <button data-theme="theme-sage">Sage</button>
-            <button data-theme="theme-dune">Dune</button>
-            <button data-theme="theme-rose">Rose</button>
-            <button data-theme="theme-lavender">Lavender</button>
-            <button data-theme="theme-festive" data-new="101">Festive</button>
-            <button data-theme="theme-winter" data-new="102">Winter</button>
-            <button data-theme="theme-outcast" data-new="103">Outcast</button>
-        </div>
-        <p>Missing tasks?</p>
-        <div class="button-cluster">
-            <button id="migrate">Migrate</button>
-        </div>
-        <p>Storage</p>
-        <div class="button-cluster">
-            <button data-reset="tasks">Reset tasks</button>
-            <button data-reset="theme">Reset theme</button>
-            <button data-reset="all">Reset all</button>
-        </div>
-        <p class="warning">WARNING: Tasks are stored locally. Clearing website data will delete all tasks</p>
-        <div class="button-cluster right">
-            <button data-close="options">Close</button>
-        </div>
-    </dialog>
-    <dialog id="info">
-        <h2>Info</h2>
-        <p>A daily planner for work, personal organization, or anything else!</p>
-        <hr>
-        <p>Keep track of the periods with <a href="https://khui0.github.io/bell-tracker/" target="_blank">Bell
-                Tracker</a>!</p>
-        <p>View the source on <a href="https://github.com/khui0/periodically" target="_blank">GitHub</a></p>
-        <div class="button-cluster right">
-            <button data-close="info">Close</button>
-        </div>
-    </dialog>
-    <dialog id="countdown">
-        <h2></h2>
-        <p></p>
-        <div class="button-cluster right">
-            <button data-close="countdown">Close</button>
-        </div>
-    </dialog>
-    <dialog id="export">
-        <h2>Export tasks</h2>
-        <textarea id="data-string" rows="10" readonly></textarea>
-        <div class="button-cluster">
-            <button id="copy-data-string">Copy</button>
-        </div>
-        <div class="button-cluster right">
-            <button data-close="export">Close</button>
-        </div>
+    <div class="row" id="bar">
+        <input type="text" placeholder="What do you have to do?" id="create-input">
+        <button class="icon"><i class="ri-share-forward-fill"></i></button>
+        <button class="icon"><i class="ri-settings-3-fill"></i></button>
+    </div>
+    <dialog id="create-modal">
+        <label>
+            Title
+            <input type="text" id="title">
+        </label>
+        <label>
+            Details
+            <textarea rows="3" id="details"></textarea>
+        </label>
+        <label>
+            Date
+            <input type="datetime-local" id="date">
+        </label>
     </dialog>
     <script type="module" src="src/main.js"></script>
 </body>
