@@ -3,7 +3,9 @@ import "./style.css";
 import "./themes.css";
 import "remixicon/fonts/remixicon.css";
 
-import { v4 as uuidv4 } from "https://jspm.dev/uuid";
+import { v4 as uuidv4 } from "uuid";
+import pluralize from "pluralize";
+import { timeUntil } from "./countdown.js";
 
 const status = document.getElementById("status");
 const feed = document.getElementById("feed");
@@ -163,7 +165,7 @@ function addButtonEvents() {
             modal.showModal();
 
             function updateCountdown() {
-                let time = timeBetween(new Date(task.timestamp).toISOString());
+                let time = timeUntil(new Date(task.timestamp).toISOString());
                 let timeStrings = [
                     pluralize("days", time.days, true),
                     pluralize("hours", time.hours, true),
