@@ -1,3 +1,8 @@
+import "./reset.css";
+import "./style.css";
+import "./themes.css";
+import "remixicon/fonts/remixicon.css";
+
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
 const status = document.getElementById("status");
