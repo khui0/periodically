@@ -42,6 +42,8 @@ document.getElementById("create-input").addEventListener("keydown", e => {
     // Transfer title to modal
     document.getElementById("title").value = e.target.value;
     e.target.value = "";
+    // Clear details
+    document.getElementById("details").value = "";
     // Set default date
     document.getElementById("date").value = time.endOfToday();
     // Show modal
@@ -82,13 +84,14 @@ function setTask(title, details, timestamp, uuid) {
         "timestamp": timestamp || Date.now(),
         "uuid": uuid || uuidv4(),
     };
-    // Remove item with same uuid
+    // Replace item if it already exists
     const existing = data.findIndex(item => item.uuid == uuid);
     if (existing != -1) {
-        data.splice(existing, 1);
+        data.splice(existing, 1, item);
     }
-    // Add new item to data object
-    data.push(item);
+    else {
+        data.push(item);
+    }
     // Sort data by date
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     localStorage.setItem("periodically-data", JSON.stringify(data));
@@ -138,6 +141,7 @@ function addEvents(element) {
     });
     // Button click events
     const controls = element.querySelector("div.controls");
+    // Mark task as complete
     controls.querySelector("[data-complete]").addEventListener("click", e => {
         // Remove task from DOM
         fadeOut(element, () => { element.remove() });
@@ -146,13 +150,36 @@ function addEvents(element) {
         localStorage.setItem("periodically-data", JSON.stringify(data));
         updateStatus();
     });
+    // Edit task
     controls.querySelector("[data-edit]").addEventListener("click", e => {
         const task = data.find(item => item.uuid == uuid);
         const index = data.findIndex(item => item.uuid == uuid);
-        appendTask(index, task.uuid, "REPLACED", "2023-10-10", "test");
-        element.remove();
+        // Fill fields with task details
+        document.getElementById("title").value = task.title;
+        document.getElementById("details").value = task.details;
+        document.getElementById("date").value = task.timestamp;
+        // Show modal
+        ui.show(document.getElementById("create-modal"), "Edit", [
+            {
+                text: "Cancel",
+                close: true,
+            },
+            {
+                text: "Edit",
+                close: true,
+                onclick: () => {
+                    const title = document.getElementById("title").value;
+                    const details = document.getElementById("details").value;
+                    const date = document.getElementById("date").value;
+                    setTask(title, details, date, task.uuid);
+                    appendTask(index, task.uuid, title, time.timeToString(date), details);
+                    element.remove();
+                },
+            },
+        ]);
         updateStatus();
     });
+    // Delete task
     controls.querySelector("[data-delete]").addEventListener("click", e => {
         // Remove task from DOM
         fadeOut(element, () => { element.remove() });
