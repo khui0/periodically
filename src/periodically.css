@@ -51,10 +51,12 @@ button.icon {
     opacity: 0;
     font-size: 20px;
     transition: opacity 100ms cubic-bezier(0.32, 0, 0.67, 0);
+    pointer-events: none;
 }
 
 #feed>div.hover>.controls {
     opacity: 1;
+    pointer-events: auto;
 }
 
 #bar {

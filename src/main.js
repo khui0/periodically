@@ -8,8 +8,6 @@ import pluralize from "pluralize";
 import * as time from "./time.js";
 import * as ui from "./ui.js";
 
-const feed = document.getElementById("feed");
-
 let data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
 document.body.className = localStorage.getItem("periodically-theme") || "";
 
@@ -80,6 +78,7 @@ function setTask(title, details, timestamp, uuid) {
 
 // Add task to DOM
 function appendTask(uuid, title, date, details) {
+    const feed = document.getElementById("feed");
     const task = document.createElement("div");
     task.setAttribute("data-uuid", uuid);
     task.innerHTML = `<h2>${title}</h2>
@@ -97,6 +96,7 @@ function appendTask(uuid, title, date, details) {
 // Add events to task
 function addEvents(element) {
     const uuid = element.getAttribute("data-uuid");
+    // Hover events
     let visible = false;
     element.addEventListener("mouseover", e => {
         element.classList.add("hover");
@@ -144,11 +144,19 @@ function addEvents(element) {
 
 // Update feed
 function updateTasks() {
+    const feed = document.getElementById("feed");
     feed.innerHTML = "";
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     for (let i = 0; i < data.length; i++) {
         appendTask(data[i].uuid, data[i].title, time.timeToString(data[i].timestamp), data[i].details);
     }
+    updateStatus();
+}
+
+// Update status to show remaining tasks
+function updateStatus() {
+    const status = document.getElementById("status");
+    status.textContent = `${pluralize("task", data.length, true)} remaining`;
 }
 
 // Update past due tasks
