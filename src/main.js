@@ -144,7 +144,7 @@ function addEvents(element) {
     // Mark task as complete
     controls.querySelector("[data-complete]").addEventListener("click", e => {
         // Remove task from DOM
-        fadeOut(element, () => { element.remove() });
+        fadeOut(element, 500, () => { element.remove() });
         // Remove item from data object
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
@@ -182,7 +182,7 @@ function addEvents(element) {
     // Delete task
     controls.querySelector("[data-delete]").addEventListener("click", e => {
         // Remove task from DOM
-        fadeOut(element, () => { element.remove() });
+        fadeOut(element, 100, () => { element.remove() });
         // Remove item from data object
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
@@ -191,8 +191,7 @@ function addEvents(element) {
 }
 
 // Fade element in
-function fadeIn(element, callback) {
-    const duration = 100;
+function fadeIn(element, duration = 100, callback) {
     element.animate([
         { opacity: 0 },
         { opacity: 1 },
@@ -204,8 +203,7 @@ function fadeIn(element, callback) {
 }
 
 // Fade element out
-function fadeOut(element, callback) {
-    const duration = 100;
+function fadeOut(element, duration = 100, callback) {
     element.animate([
         { opacity: 1 },
         { opacity: 0 },
