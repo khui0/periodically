@@ -14,10 +14,10 @@ document.body.className = localStorage.getItem("periodically-theme") || "";
 updateTasks();
 setInterval(updatePastDue, 100);
 
-// Focus create input on keypress
+// Keyboard shortcuts
 document.addEventListener("keydown", e => {
-    const input = document.getElementById("create-input");
     if (document.activeElement == document.body) {
+        const input = document.getElementById("create-input");
         const modifiers = e.ctrlKey || e.altKey;
         const allowed = [
             "Enter",
@@ -25,6 +25,11 @@ document.addEventListener("keydown", e => {
         ];
         if (!modifiers && e.key && e.key.length === 1 || allowed.includes(e.key)) {
             input.focus();
+        }
+    }
+    else if (document.getElementById("create-modal").hasAttribute("open")) {
+        if (e.ctrlKey && e.key == "Enter") {
+            createTask();
         }
     }
 });
@@ -53,13 +58,6 @@ document.getElementById("create-input").addEventListener("keydown", e => {
     ]);
 });
 
-// Create task on Ctrl + Enter
-document.getElementById("title").addEventListener("keydown", e => {
-    if (e.ctrlKey && e.key == "Enter") {
-        createTask();
-    }
-});
-
 // Create new task
 function createTask() {
     const title = document.getElementById("title").value;
@@ -72,6 +70,7 @@ function createTask() {
         fadeIn(element);
         updateStatus();
         document.getElementById("create-modal").close();
+        document.getElementById("create-input").blur();
     }
 }
 
