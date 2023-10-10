@@ -68,7 +68,8 @@ function createTask() {
     if (title?.trim() && date?.trim()) {
         const uuid = setTask(title, details, date);
         const index = data.findIndex(item => item.uuid == uuid);
-        appendTask(index, uuid, title, time.timeToString(date), details);
+        const element = appendTask(index, uuid, title, time.timeToString(date), details);
+        fadeIn(element);
         updateStatus();
         document.getElementById("create-modal").close();
     }
@@ -140,7 +141,7 @@ function addEvents(element) {
     const controls = element.querySelector("div.controls");
     controls.querySelector("[data-complete]").addEventListener("click", e => {
         // Remove task from DOM
-        fadeRemove(element);
+        fadeOut(element, () => { element.remove() });
         // Remove item from data object
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
@@ -155,7 +156,7 @@ function addEvents(element) {
     });
     controls.querySelector("[data-delete]").addEventListener("click", e => {
         // Remove task from DOM
-        fadeRemove(element);
+        fadeOut(element, () => { element.remove() });
         // Remove item from data object
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
@@ -163,8 +164,21 @@ function addEvents(element) {
     });
 }
 
-// Remove element with fade
-function fadeRemove(element) {
+// Fade element in
+function fadeIn(element, callback) {
+    const duration = 100;
+    element.animate([
+        { opacity: 0 },
+        { opacity: 1 },
+    ], {
+        duration,
+        fill: "forwards",
+    });
+    callback && setTimeout(callback, duration);
+}
+
+// Fade element out
+function fadeOut(element, callback) {
     const duration = 100;
     element.animate([
         { opacity: 1 },
@@ -173,14 +187,7 @@ function fadeRemove(element) {
         duration,
         fill: "forwards",
     });
-    setTimeout(() => {
-        element.remove();
-    }, duration);
-}
-
-// Append element with fade
-function fadeAppend(element) {
-
+    callback && setTimeout(callback, duration);
 }
 
 // Update tasks
