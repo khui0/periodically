@@ -14,6 +14,21 @@ document.body.className = localStorage.getItem("periodically-theme") || "";
 updateTasks();
 setInterval(updatePastDue, 100);
 
+// Focus create input on keypress
+document.addEventListener("keydown", e => {
+    const input = document.getElementById("create-input");
+    if (document.activeElement == document.body) {
+        const modifiers = e.ctrlKey || e.altKey;
+        const allowed = [
+            "Enter",
+            "Backspace",
+        ];
+        if (!modifiers && e.key && e.key.length === 1 || allowed.includes(e.key)) {
+            input.focus();
+        }
+    }
+});
+
 // Show create task modal
 document.getElementById("create-input").addEventListener("keydown", e => {
     if (e.key != "Enter") {
