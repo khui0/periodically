@@ -66,8 +66,10 @@ function createTask() {
     const details = document.getElementById("details").value;
     const date = document.getElementById("date").value;
     if (title?.trim() && date?.trim()) {
-        setTask(title, details, date);
-        updateTasks();
+        const uuid = setTask(title, details, date);
+        const index = data.findIndex(item => item.uuid == uuid);
+        appendTask(index, uuid, title, time.timeToString(date), details);
+        updateStatus();
         document.getElementById("create-modal").close();
     }
 }
@@ -87,12 +89,14 @@ function setTask(title, details, timestamp, uuid) {
     }
     // Add new item to data object
     data.push(item);
+    // Sort data by date
+    data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     localStorage.setItem("periodically-data", JSON.stringify(data));
     return item.uuid;
 }
 
 // Add task to DOM
-function appendTask(uuid, title, date, details) {
+function appendTask(index, uuid, title, date, details) {
     const feed = document.getElementById("feed");
     const task = document.createElement("div");
     task.setAttribute("data-uuid", uuid);
@@ -104,8 +108,9 @@ function appendTask(uuid, title, date, details) {
     <button class="icon" data-edit><i class="ri-pencil-fill"></i></button>
     <button class="icon" data-delete><i class="ri-delete-bin-6-fill"></i></button>
 </div>`;
-    feed.append(task);
+    feed.insertBefore(task, feed.childNodes[index]);
     addEvents(task);
+    return task;
 }
 
 // Add events to task
@@ -135,7 +140,7 @@ function addEvents(element) {
     const controls = element.querySelector("div.controls");
     controls.querySelector("[data-complete]").addEventListener("click", e => {
         // Remove task from DOM
-        element.remove();
+        fadeRemove(element);
         // Remove item from data object
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
@@ -143,13 +148,14 @@ function addEvents(element) {
     });
     controls.querySelector("[data-edit]").addEventListener("click", e => {
         const task = data.find(item => item.uuid == uuid);
-        console.log(task);
-        document.getElementById("task").showModal();
+        const index = data.findIndex(item => item.uuid == uuid);
+        appendTask(index, task.uuid, "REPLACED", "2023-10-10", "test");
+        element.remove();
         updateStatus();
     });
     controls.querySelector("[data-delete]").addEventListener("click", e => {
         // Remove task from DOM
-        element.remove();
+        fadeRemove(element);
         // Remove item from data object
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
@@ -157,13 +163,30 @@ function addEvents(element) {
     });
 }
 
-// Update feed
+// Remove element with fade
+function fadeRemove(element) {
+    const duration = 100;
+    element.animate([
+        { opacity: 1 },
+        { opacity: 0 },
+    ], {
+        duration,
+        fill: "forwards",
+    });
+    setTimeout(() => {
+        element.remove();
+    }, duration);
+}
+
+// Append element with fade
+function fadeAppend(element) {
+
+}
+
+// Update tasks
 function updateTasks() {
-    const feed = document.getElementById("feed");
-    feed.innerHTML = "";
-    data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
     for (let i = 0; i < data.length; i++) {
-        appendTask(data[i].uuid, data[i].title, time.timeToString(data[i].timestamp), data[i].details);
+        appendTask(i, data[i].uuid, data[i].title, time.timeToString(data[i].timestamp), data[i].details);
     }
     updateStatus();
 }
@@ -179,7 +202,7 @@ function updatePastDue() {
     let current = Date.now();
     for (let i = 0; i < data.length; i++) {
         if (current > data[i].timestamp) {
-            document.getElementById(data[i].uuid).querySelector("p").className = "warning";
+            document.querySelector(`[data-uuid="${data[i].uuid}"]`).className = "warning";
         }
     }
 }

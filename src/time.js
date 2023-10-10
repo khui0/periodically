@@ -1,4 +1,4 @@
-// Returns time until date in units of time
+// Return time until date in units of time
 export function timeUntil(date) {
     date = Date.parse(date) || date;
     const milliseconds = date - Date.now();
@@ -15,7 +15,7 @@ export function timeUntil(date) {
     };
 }
 
-// Formats the date provided
+// Format the date provided
 export function timeToString(timestamp) {
     const date = new Date(timestamp);
     if (timestamp) {
@@ -47,7 +47,7 @@ export function timeToString(timestamp) {
     }
 }
 
-// Checks if the date provided the same date as today
+// Check if the date provided the same date as today
 export function isToday(timestamp) {
     const target = new Date(timestamp);
     const today = new Date();
@@ -59,7 +59,7 @@ export function isToday(timestamp) {
     return comparisons.every(value => value);
 }
 
-// Converts date into ISO format for use in datetime-local input
+// Convert date into ISO format for use in datetime-local input
 export function timeToISO(timestamp) {
     const date = new Date(timestamp);
     const year = date.getFullYear();
@@ -70,7 +70,7 @@ export function timeToISO(timestamp) {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
-// Returns 11:59 PM in ISO format
+// Return 11:59 PM in ISO format
 export function endOfToday() {
     const date = new Date();
     const year = date.getFullYear();
