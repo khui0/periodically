@@ -15,6 +15,10 @@ button.icon {
     border-radius: 100vh;
 }
 
+.warning {
+    color: var(--error-color);
+}
+
 #status {
     margin-bottom: 1rem;
 }

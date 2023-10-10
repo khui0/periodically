@@ -101,7 +101,7 @@ function appendTask(index, uuid, title, date, details) {
     const task = document.createElement("div");
     task.setAttribute("data-uuid", uuid);
     task.innerHTML = `<h2>${title}</h2>
-<p>${date}</p>
+<p data-date>${date}</p>
 <p>${details && insertAnchors(details)}</p>
 <div class="controls">
     <button class="icon" data-complete><i class="ri-check-fill"></i></button>
@@ -205,10 +205,10 @@ function updateStatus() {
 
 // Update past due tasks
 function updatePastDue() {
-    const current = Date.now();
     for (let i = 0; i < data.length; i++) {
-        if (current > data[i].timestamp) {
-            document.querySelector(`[data-uuid="${data[i].uuid}"]`).className = "warning";
+        const task = data[i];
+        if (Date.now() > new Date(task.timestamp).getTime()) {
+            document.querySelector(`[data-uuid="${task.uuid}"]>[data-date]`).classList.add("warning");
         }
     }
 }
