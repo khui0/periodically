@@ -13,12 +13,10 @@ const feed = document.getElementById("feed");
 let data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
 document.body.className = localStorage.getItem("periodically-theme") || "";
 
-console.log(data);
-
 updateTasks();
-
 setInterval(updatePastDue, 100);
 
+// Show create task modal
 document.getElementById("create-input").addEventListener("keydown", e => {
     if (e.key != "Enter") {
         return;
@@ -49,6 +47,7 @@ document.getElementById("title").addEventListener("keydown", e => {
     }
 });
 
+// Create new task
 function createTask() {
     const title = document.getElementById("title").value;
     const details = document.getElementById("details").value;
@@ -60,6 +59,7 @@ function createTask() {
     }
 }
 
+// Add task to data object
 function setTask(title, details, timestamp, uuid) {
     const item = {
         "title": title.trim(),
@@ -72,12 +72,13 @@ function setTask(title, details, timestamp, uuid) {
     if (existing != -1) {
         data.splice(existing, 1);
     }
-    // Add new item to array
+    // Add new item to data object
     data.push(item);
     localStorage.setItem("periodically-data", JSON.stringify(data));
     return item.uuid;
 }
 
+// Add task to DOM
 function appendTask(uuid, title, date, details) {
     const task = document.createElement("div");
     task.setAttribute("data-uuid", uuid);
@@ -85,40 +86,63 @@ function appendTask(uuid, title, date, details) {
 <p>${date}</p>
 <p>${details}</p>
 <div class="controls">
-    <button class="icon" data-complete="${uuid}"><i class="ri-check-fill"></i></button>
-    <button class="icon" data-edit="${uuid}"><i class="ri-pencil-fill"></i></button>
-    <button class="icon" data-delete="${uuid}"><i class="ri-delete-bin-6-fill"></i></button>
+    <button class="icon" data-complete><i class="ri-check-fill"></i></button>
+    <button class="icon" data-edit><i class="ri-pencil-fill"></i></button>
+    <button class="icon" data-delete><i class="ri-delete-bin-6-fill"></i></button>
 </div>`;
     feed.append(task);
-    addButtonEvents();
+    addEvents(task);
 }
 
-function addButtonEvents() {
-    document.querySelectorAll("[data-delete]").forEach(item => {
-        item.addEventListener("click", e => {
-            let uuid = e.target.getAttribute("data-delete");
-            let task = data.find(item => item.uuid == uuid);
-            if (confirm(`Would you like to mark "${truncateString(task.title, 20)}" as completed? 🥳`)) {
-                // Remove item from DOM
-                document.getElementById(uuid).remove();
-                // Remove item from data object
-                data = data.filter(item => item.uuid != uuid);
-                localStorage.setItem("periodically-data", JSON.stringify(data));
-                updateStatus();
-            }
-        });
+// Add events to task
+function addEvents(element) {
+    const uuid = element.getAttribute("data-uuid");
+    let visible = false;
+    element.addEventListener("mouseover", e => {
+        element.classList.add("hover");
+        visible = true;
     });
-    document.querySelectorAll("[data-edit]").forEach(item => {
-        item.addEventListener("click", e => {
-            let uuid = e.target.getAttribute("data-edit");
-            let task = data.find(item => item.uuid == uuid);
-            setTaskModal("Edit task", "Save", uuid, [task.title, timeToISO(task.timestamp), task.details]);
-            document.getElementById("task").showModal();
-            updateStatus();
-        });
+    element.addEventListener("mouseout", e => {
+        element.classList.remove("hover");
+        visible = false;
+    });
+    element.addEventListener("click", e => {
+        if (!visible) {
+            element.classList.add("hover");
+            visible = true;
+        }
+        else {
+            element.classList.remove("hover");
+            visible = false;
+        }
+    });
+    // Button click events
+    const controls = element.querySelector("div.controls");
+    controls.querySelector("[data-complete]").addEventListener("click", e => {
+        // Remove task from DOM
+        element.remove();
+        // Remove item from data object
+        data = data.filter(item => item.uuid != uuid);
+        localStorage.setItem("periodically-data", JSON.stringify(data));
+        updateStatus();
+    });
+    controls.querySelector("[data-edit]").addEventListener("click", e => {
+        const task = data.find(item => item.uuid == uuid);
+        console.log(task);
+        document.getElementById("task").showModal();
+        updateStatus();
+    });
+    controls.querySelector("[data-delete]").addEventListener("click", e => {
+        // Remove task from DOM
+        element.remove();
+        // Remove item from data object
+        data = data.filter(item => item.uuid != uuid);
+        localStorage.setItem("periodically-data", JSON.stringify(data));
+        updateStatus();
     });
 }
 
+// Update feed
 function updateTasks() {
     feed.innerHTML = "";
     data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
@@ -127,22 +151,13 @@ function updateTasks() {
     }
 }
 
+// Update past due tasks
 function updatePastDue() {
     let current = Date.now();
     for (let i = 0; i < data.length; i++) {
         if (current > data[i].timestamp) {
             document.getElementById(data[i].uuid).querySelector("p").className = "warning";
         }
-    }
-}
-
-// Truncate string with an ellipsis
-function truncateString(string, length) {
-    if (string.length > length) {
-        return string.substring(0, length) + "...";
-    }
-    else {
-        return string
     }
 }
 

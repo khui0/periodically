@@ -6,7 +6,7 @@ body {
 }
 
 button {
-    transition: 100ms background-color cubic-bezier(0.32, 0, 0.67, 0);
+    transition: background-color 100ms cubic-bezier(0.32, 0, 0.67, 0);
 }
 
 button.icon {
@@ -50,10 +50,9 @@ button.icon {
     background-color: transparent;
     opacity: 0;
     font-size: 20px;
-    transition: 100ms opacity cubic-bezier(0.32, 0, 0.67, 0);
+    transition: opacity 100ms cubic-bezier(0.32, 0, 0.67, 0);
 }
 
-#feed>div:hover>.controls,
 #feed>div.hover>.controls {
     opacity: 1;
 }
