@@ -103,7 +103,7 @@ function appendTask(index, uuid, title, date, details) {
     task.setAttribute("data-uuid", uuid);
     task.innerHTML = `<h2>${title}</h2>
 <p>${date}</p>
-<p>${details}</p>
+<p>${details && insertAnchors(details)}</p>
 <div class="controls">
     <button class="icon" data-complete><i class="ri-check-fill"></i></button>
     <button class="icon" data-edit><i class="ri-pencil-fill"></i></button>
@@ -206,7 +206,7 @@ function updateStatus() {
 
 // Update past due tasks
 function updatePastDue() {
-    let current = Date.now();
+    const current = Date.now();
     for (let i = 0; i < data.length; i++) {
         if (current > data[i].timestamp) {
             document.querySelector(`[data-uuid="${data[i].uuid}"]`).className = "warning";
@@ -214,18 +214,17 @@ function updatePastDue() {
     }
 }
 
-// Detect links and replace them with anchor elements
-function insertAnchors(element) {
-    if (element.innerHTML) {
-        let regex = /https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&//=]*/g;
-        let p1 = element.innerHTML.replaceAll("&amp;", "&").split(regex);
-        let p2 = element.innerHTML.replaceAll("&amp;", "&").match(regex);
-        element.innerHTML = "";
-        for (let i = 0; i < p1.length; i++) {
-            element.innerHTML += p1[i];
-            if (i < p1.length - 1) {
-                element.innerHTML += `<a href="${p2[i]}">${p2[i]}</a>`;
-            }
+// Replace links with anchor elements
+function insertAnchors(html) {
+    const regex = /https?:\/\/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&//=]*/g;
+    const p1 = html.replaceAll("&amp;", "&").split(regex);
+    const p2 = html.replaceAll("&amp;", "&").match(regex);
+    html = "";
+    for (let i = 0; i < p1.length; i++) {
+        html += p1[i];
+        if (i < p1.length - 1) {
+            html += `<a href="${p2[i]}">${p2[i]}</a>`;
         }
     }
+    return html;
 }
