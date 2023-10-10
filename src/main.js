@@ -3,13 +3,15 @@ import "./style.css";
 import "./periodically.css";
 import "remixicon/fonts/remixicon.css";
 
+import "./archive.js";
+
 import { v4 as uuidv4 } from "uuid";
 import pluralize from "pluralize";
 import * as time from "./time.js";
 import * as ui from "./ui.js";
 
 let data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
-document.body.className = localStorage.getItem("periodically-theme") || "";
+let archive = JSON.parse(localStorage.getItem("periodically-archive") || "[]");
 
 updateTasks();
 setInterval(updatePastDue, 100);
@@ -76,7 +78,7 @@ function createTask() {
     }
 }
 
-// Add task to data object
+// Add task to data array
 function setTask(title, details, timestamp, uuid) {
     const item = {
         "title": title.trim(),
@@ -145,7 +147,10 @@ function addEvents(element) {
     controls.querySelector("[data-complete]").addEventListener("click", e => {
         // Remove task from DOM
         fadeOut(element, 500, () => { element.remove() });
-        // Remove item from data object
+        // Add item to archive array
+        archive.push(data.find(item => item.uuid == uuid));
+        localStorage.setItem("periodically-archive", JSON.stringify(archive));
+        // Remove item from data array
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
         updateStatus();
@@ -183,7 +188,7 @@ function addEvents(element) {
     controls.querySelector("[data-delete]").addEventListener("click", e => {
         // Remove task from DOM
         fadeOut(element, 100, () => { element.remove() });
-        // Remove item from data object
+        // Remove item from data array
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
         updateStatus();
