@@ -1,0 +1,26 @@
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+dialog {
+    gap: 0.25rem;
+    width: min(100%, 450px);
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.25);
+}
+
+dialog::backdrop {
+    background-color: #000000;
+    opacity: 0.25;
+}
+
+dialog>div:last-of-type {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+}

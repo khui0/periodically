@@ -1,0 +1,20 @@
+{
+  "name": "vite-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.4.0",
+    "vite-plugin-webfont-dl": "^3.7.6"
+  },
+  "dependencies": {
+    "pluralize": "^8.0.0",
+    "remixicon": "^3.5.0",
+    "uuid": "^9.0.1"
+  }
+}

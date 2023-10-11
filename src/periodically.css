@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 800px);
+    margin: 0 auto;
+}
+
+button {
+    transition: background-color 100ms cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+button.icon {
+    width: 2.25em;
+    padding: 0;
+    border-radius: 100vh;
+}
+
+.warning {
+    color: var(--error-color);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+}
+
+.list>div {
+    position: relative;
+    width: 100%;
+}
+
+.list>div>p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.list>div>.controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: transparent;
+    opacity: 0;
+    font-size: 20px;
+    transition: opacity 100ms cubic-bezier(0.32, 0, 0.67, 0);
+    pointer-events: none;
+}
+
+.list>div.hover>.controls {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+button[data-delete] {
+    --accent-color: var(--error-color);
+}
+
+#status {
+    margin-bottom: 1rem;
+}
+
+#data-list {
+    flex: 1;
+}
+
+#bar {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#create-input {
+    flex: 1;
+    min-width: 0;
+    border-radius: 100vh;
+}

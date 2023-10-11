@@ -1,0 +1,143 @@
+:root {
+    color-scheme: dark;
+    --text-color: #ffffff;
+    --background-color: #161616;
+    --surface-color: #333333;
+    --accent-color: #059fff;
+    --accent-text-color: #ffffff;
+    --error-color: #e23c52;
+}
+
+* {
+    color: inherit;
+    background-color: inherit;
+}
+
+:focus-visible {
+    z-index: 1;
+    outline: none;
+    box-shadow: 0 0 0 0.125rem var(--accent-color);
+    transition: box-shadow 100ms cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+::placeholder {
+    color: var(--text-color);
+    opacity: 0.5;
+}
+
+body {
+    height: 100%;
+    padding: 1rem;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    font: 16px "Poppins", sans-serif;
+    line-height: 1.5;
+}
+
+h1 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    height: 2.25em;
+    padding: 0 0.75em;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--surface-color);
+    font: inherit;
+}
+
+input,
+select {
+    height: 2.25em;
+    padding: 0 0.75em;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--surface-color);
+}
+
+textarea {
+    padding: 0.375em 0.75em;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--surface-color);
+    resize: none;
+}
+
+@media (hover: hover) {
+    button:hover {
+        color: var(--accent-text-color);
+        background-color: var(--accent-color);
+    }
+
+    label:hover+button {
+        background-color: var(--surface-color);
+    }
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    width: fit-content;
+    flex-wrap: wrap;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* GoGuardian */
+
+[data-gg-chat-anchor],
+[data-gg-privacy-banner-anchor] {
+    display: none !important;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    border: 0.25rem solid transparent;
+    background-color: var(--surface-color);
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: var(--background-color);
+}
