@@ -3,8 +3,6 @@ import "./style.css";
 import "./periodically.css";
 import "remixicon/fonts/remixicon.css";
 
-import "./archive.js";
-
 import { v4 as uuidv4 } from "uuid";
 import pluralize from "pluralize";
 import * as time from "./time.js";
@@ -100,7 +98,7 @@ function setTask(title, details, timestamp, uuid) {
     return item.uuid;
 }
 
-// Add task to DOM
+// Append task to data list
 function appendTask(index, uuid, title, date, details) {
     const list = document.getElementById("data-list");
     const task = document.createElement("div");
@@ -176,7 +174,7 @@ function addEvents(element) {
     });
 }
 
-// Update tasks
+// Update data list
 function updateTasks() {
     for (let i = 0; i < data.length; i++) {
         appendTask(i, data[i].uuid, data[i].title, time.timeToString(data[i].timestamp), data[i].details);
@@ -213,4 +211,72 @@ function insertAnchors(html) {
         }
     }
     return html;
+}
+
+// TODO: Separate into separate files
+// Show archive modal
+document.getElementById("archive").addEventListener("click", e => {
+    ui.show(document.getElementById("archive-modal"), "Archive", [
+        {
+            text: "Close",
+            close: true,
+        },
+    ]);
+    updateArchive();
+});
+
+// Update archive list
+function updateArchive() {
+    const list = document.getElementById("archive-list");
+    list.innerHTML = "";
+    const archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
+    for (let i = 0; i < archive.length; i++) {
+        const item = archive[i];
+        appendArchive(item.uuid, item.title, time.timeToString(item.timestamp), item.details);
+    }
+}
+
+// Append element to DOM
+function appendArchive(uuid, title, date, details) {
+    const list = document.getElementById("archive-list");
+    const task = document.createElement("div");
+    task.setAttribute("data-uuid", uuid);
+    task.innerHTML = `<h2>${title}</h2>
+<p>${date}</p>
+<p>${details}</p>
+<div class="controls">
+    <button class="icon" data-restore><i class="ri-arrow-go-back-fill"></i></button>
+    <button class="icon" data-delete><i class="ri-delete-bin-6-fill"></i></button>
+</div>`;
+    list.append(task);
+    // Add events
+    (() => {
+        ui.addHover(task);
+        // Button click events
+        const uuid = task.getAttribute("data-uuid");
+        const controls = task.querySelector("div.controls");
+        // Restore task
+        controls.querySelector("[data-restore]").addEventListener("click", e => {
+            let data = JSON.parse(localStorage.getItem("periodically-data")) || [];
+            let archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
+            const index = archive.findIndex(item => item.uuid == uuid);
+            const task = archive[index];
+            // Add item to data array
+            data.push(task);
+            data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
+            localStorage.setItem("periodically-data", JSON.stringify(data));
+            // Remove item from archive array
+            archive.splice(index, 1);
+            localStorage.setItem("periodically-archive", JSON.stringify(archive));
+            // Close modal
+            document.getElementById("archive-modal").close();
+        });
+        // Delete task
+        controls.querySelector("[data-delete]").addEventListener("click", e => {
+            // Remove task from DOM
+            ui.fadeOut(task, 100, () => { task.remove() });
+            // Remove item from archive array
+        });
+    })();
+    return task;
 }
