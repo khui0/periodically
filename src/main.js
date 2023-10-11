@@ -119,9 +119,9 @@ function appendTask(index, uuid, title, date, details) {
 // Add events to task
 function addEvents(element) {
     ui.addHover(element);
-    const uuid = element.getAttribute("data-uuid");
     // Button click events
     const controls = element.querySelector("div.controls");
+    const uuid = element.getAttribute("data-uuid");
     // Mark task as complete
     controls.querySelector("[data-complete]").addEventListener("click", e => {
         // Remove task from DOM
@@ -177,7 +177,8 @@ function addEvents(element) {
 // Update data list
 function updateTasks() {
     for (let i = 0; i < data.length; i++) {
-        appendTask(i, data[i].uuid, data[i].title, time.timeToString(data[i].timestamp), data[i].details);
+        const item = data[i];
+        appendTask(i, item.uuid, item.title, time.timeToString(item.timestamp), item.details);
     }
     updateStatus();
 }
@@ -191,9 +192,9 @@ function updateStatus() {
 // Update past due tasks
 function updatePastDue() {
     for (let i = 0; i < data.length; i++) {
-        const task = data[i];
-        if (Date.now() > new Date(task.timestamp).getTime()) {
-            document.querySelector(`[data-uuid="${task.uuid}"]>[data-date]`).classList.add("warning");
+        const item = data[i];
+        if (Date.now() > new Date(item.timestamp).getTime()) {
+            document.querySelector(`[data-uuid="${item.uuid}"]>[data-date]`).classList.add("warning");
         }
     }
 }
@@ -229,7 +230,6 @@ document.getElementById("archive").addEventListener("click", e => {
 function updateArchive() {
     const list = document.getElementById("archive-list");
     list.innerHTML = "";
-    const archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
     for (let i = 0; i < archive.length; i++) {
         const item = archive[i];
         appendArchive(item.uuid, item.title, time.timeToString(item.timestamp), item.details);
@@ -253,12 +253,10 @@ function appendArchive(uuid, title, date, details) {
     (() => {
         ui.addHover(task);
         // Button click events
-        const uuid = task.getAttribute("data-uuid");
         const controls = task.querySelector("div.controls");
+        const uuid = task.getAttribute("data-uuid");
         // Restore task
         controls.querySelector("[data-restore]").addEventListener("click", e => {
-            let data = JSON.parse(localStorage.getItem("periodically-data")) || [];
-            let archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
             const index = archive.findIndex(item => item.uuid == uuid);
             const task = archive[index];
             // Add item to data array
