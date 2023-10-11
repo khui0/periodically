@@ -137,7 +137,6 @@ function addEvents(element) {
     // Edit task
     controls.querySelector("[data-edit]").addEventListener("click", e => {
         const task = data.find(item => item.uuid == uuid);
-        const index = data.findIndex(item => item.uuid == uuid);
         // Fill fields with task details
         document.getElementById("title").value = task.title;
         document.getElementById("details").value = task.details;
@@ -155,9 +154,13 @@ function addEvents(element) {
                     const title = document.getElementById("title").value;
                     const details = document.getElementById("details").value;
                     const date = document.getElementById("date").value;
-                    setTask(title, details, date, task.uuid);
-                    appendTask(index, task.uuid, title, time.timeToString(date), details);
+                    // Remove existing element
                     element.remove();
+                    // Set new item
+                    setTask(title, details, date, task.uuid);
+                    // Append new element
+                    const index = data.findIndex(item => item.uuid == task.uuid);
+                    appendTask(index, task.uuid, title, time.timeToString(date), details);
                 },
             },
         ]);
