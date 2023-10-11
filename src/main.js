@@ -10,8 +10,8 @@ import pluralize from "pluralize";
 import * as time from "./time.js";
 import * as ui from "./ui.js";
 
-let data = JSON.parse(localStorage.getItem("periodically-data") || "[]");
-let archive = JSON.parse(localStorage.getItem("periodically-archive") || "[]");
+let data = JSON.parse(localStorage.getItem("periodically-data")) || [];
+let archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
 
 updateTasks();
 setInterval(updatePastDue, 100);
@@ -71,7 +71,7 @@ function createTask() {
         const uuid = setTask(title, details, date);
         const index = data.findIndex(item => item.uuid == uuid);
         const element = appendTask(index, uuid, title, time.timeToString(date), details);
-        fadeIn(element);
+        ui.fadeIn(element);
         updateStatus();
         document.getElementById("create-modal").close();
         document.getElementById("create-input").blur();
@@ -102,7 +102,7 @@ function setTask(title, details, timestamp, uuid) {
 
 // Add task to DOM
 function appendTask(index, uuid, title, date, details) {
-    const feed = document.getElementById("feed");
+    const list = document.getElementById("data-list");
     const task = document.createElement("div");
     task.setAttribute("data-uuid", uuid);
     task.innerHTML = `<h2>${title}</h2>
@@ -113,40 +113,21 @@ function appendTask(index, uuid, title, date, details) {
     <button class="icon" data-edit><i class="ri-pencil-fill"></i></button>
     <button class="icon" data-delete><i class="ri-delete-bin-6-fill"></i></button>
 </div>`;
-    feed.insertBefore(task, feed.childNodes[index]);
+    list.insertBefore(task, list.childNodes[index]);
     addEvents(task);
     return task;
 }
 
 // Add events to task
 function addEvents(element) {
+    ui.addHover(element);
     const uuid = element.getAttribute("data-uuid");
-    // Hover events
-    let visible = false;
-    element.addEventListener("mouseover", e => {
-        element.classList.add("hover");
-        visible = true;
-    });
-    element.addEventListener("mouseout", e => {
-        element.classList.remove("hover");
-        visible = false;
-    });
-    element.addEventListener("click", e => {
-        if (!visible) {
-            element.classList.add("hover");
-            visible = true;
-        }
-        else {
-            element.classList.remove("hover");
-            visible = false;
-        }
-    });
     // Button click events
     const controls = element.querySelector("div.controls");
     // Mark task as complete
     controls.querySelector("[data-complete]").addEventListener("click", e => {
         // Remove task from DOM
-        fadeOut(element, 500, () => { element.remove() });
+        ui.fadeOut(element, 500, () => { element.remove() });
         // Add item to archive array
         archive.push(data.find(item => item.uuid == uuid));
         localStorage.setItem("periodically-archive", JSON.stringify(archive));
@@ -187,36 +168,12 @@ function addEvents(element) {
     // Delete task
     controls.querySelector("[data-delete]").addEventListener("click", e => {
         // Remove task from DOM
-        fadeOut(element, 100, () => { element.remove() });
+        ui.fadeOut(element, 100, () => { element.remove() });
         // Remove item from data array
         data = data.filter(item => item.uuid != uuid);
         localStorage.setItem("periodically-data", JSON.stringify(data));
         updateStatus();
     });
-}
-
-// Fade element in
-function fadeIn(element, duration = 100, callback) {
-    element.animate([
-        { opacity: 0 },
-        { opacity: 1 },
-    ], {
-        duration,
-        fill: "forwards",
-    });
-    callback && setTimeout(callback, duration);
-}
-
-// Fade element out
-function fadeOut(element, duration = 100, callback) {
-    element.animate([
-        { opacity: 1 },
-        { opacity: 0 },
-    ], {
-        duration,
-        fill: "forwards",
-    });
-    callback && setTimeout(callback, duration);
 }
 
 // Update tasks

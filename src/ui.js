@@ -1,4 +1,4 @@
-// 1.0.0
+// 1.1.0
 
 import "./modal.css";
 
@@ -102,4 +102,51 @@ export class Element {
         });
         return element;
     }
+}
+
+// Add hover events
+export function addHover(element) {
+    let visible = false;
+    element.addEventListener("mouseover", e => {
+        element.classList.add("hover");
+        visible = true;
+    });
+    element.addEventListener("mouseout", e => {
+        element.classList.remove("hover");
+        visible = false;
+    });
+    element.addEventListener("click", e => {
+        if (!visible) {
+            element.classList.add("hover");
+            visible = true;
+        }
+        else {
+            element.classList.remove("hover");
+            visible = false;
+        }
+    });
+}
+
+// Fade element in
+export function fadeIn(element, duration = 100, callback) {
+    element.animate([
+        { opacity: 0 },
+        { opacity: 1 },
+    ], {
+        duration,
+        fill: "forwards",
+    });
+    callback && setTimeout(callback, duration);
+}
+
+// Fade element out
+export function fadeOut(element, duration = 100, callback) {
+    element.animate([
+        { opacity: 1 },
+        { opacity: 0 },
+    ], {
+        duration,
+        fill: "forwards",
+    });
+    callback && setTimeout(callback, duration);
 }

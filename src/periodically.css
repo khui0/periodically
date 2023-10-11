@@ -23,7 +23,7 @@ button.icon {
     margin-bottom: 1rem;
 }
 
-#feed {
+.list {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -31,18 +31,18 @@ button.icon {
     overflow: auto;
 }
 
-#feed>div {
+.list>div {
     position: relative;
     width: 100%;
 }
 
-#feed>div>p {
+.list>div>p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-#feed>div>.controls {
+.list>div>.controls {
     position: absolute;
     top: 0;
     right: 0;
@@ -58,7 +58,7 @@ button.icon {
     pointer-events: none;
 }
 
-#feed>div.hover>.controls {
+.list>div.hover>.controls {
     opacity: 1;
     pointer-events: auto;
 }
