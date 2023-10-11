@@ -250,31 +250,34 @@ function appendArchive(uuid, title, date, details) {
 </div>`;
     list.append(task);
     // Add events
-    (() => {
+    {
         ui.addHover(task);
         // Button click events
         const controls = task.querySelector("div.controls");
         const uuid = task.getAttribute("data-uuid");
         // Restore task
         controls.querySelector("[data-restore]").addEventListener("click", e => {
-            const index = archive.findIndex(item => item.uuid == uuid);
-            const task = archive[index];
-            // Add item to data array
-            data.push(task);
-            data.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : ((b.timestamp > a.timestamp) ? -1 : 0));
-            localStorage.setItem("periodically-data", JSON.stringify(data));
+            const task = archive.find(item => item.uuid == uuid);
             // Remove item from archive array
-            archive.splice(index, 1);
+            archive = archive.filter(item => item.uuid != uuid);
             localStorage.setItem("periodically-archive", JSON.stringify(archive));
+            // Append task to data list
+            setTask(task.title, task.details, task.timestamp, uuid);
+            const index = data.findIndex(item => item.uuid == uuid);
+            const element = appendTask(index, uuid, task.title, time.timeToString(task.timestamp), task.details);
+            ui.fadeIn(element);
             // Close modal
             document.getElementById("archive-modal").close();
+            updateStatus();
         });
         // Delete task
         controls.querySelector("[data-delete]").addEventListener("click", e => {
-            // Remove task from DOM
+            // Remove task from archive list
             ui.fadeOut(task, 100, () => { task.remove() });
             // Remove item from archive array
+            archive = archive.filter(item => item.uuid != uuid);
+            localStorage.setItem("periodically-archive", JSON.stringify(archive));
         });
-    })();
+    }
     return task;
 }
