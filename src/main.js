@@ -124,7 +124,7 @@ function addEvents(element) {
     const uuid = element.getAttribute("data-uuid");
     // Mark task as complete
     controls.querySelector("[data-complete]").addEventListener("click", e => {
-        // Remove task from DOM
+        // Remove task from data list
         ui.fadeOut(element, 500, () => { element.remove() });
         // Add item to archive array
         archive.push(data.find(item => item.uuid == uuid));
@@ -165,7 +165,7 @@ function addEvents(element) {
     });
     // Delete task
     controls.querySelector("[data-delete]").addEventListener("click", e => {
-        // Remove task from DOM
+        // Remove task from data list
         ui.fadeOut(element, 100, () => { element.remove() });
         // Remove item from data array
         data = data.filter(item => item.uuid != uuid);
@@ -236,7 +236,7 @@ function updateArchive() {
     }
 }
 
-// Append element to DOM
+// Append element to archive list
 function appendArchive(uuid, title, date, details) {
     const list = document.getElementById("archive-list");
     const task = document.createElement("div");
