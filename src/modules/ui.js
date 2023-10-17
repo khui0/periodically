@@ -1,6 +1,6 @@
-// 1.1.0
+// 1.1.1
 
-import "./modal.css";
+import "./ui.css";
 
 export function alert(title, text, callback, blur) {
     modal({

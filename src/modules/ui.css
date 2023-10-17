@@ -9,7 +9,7 @@ dialog {
     padding: 1rem;
     border: none;
     border-radius: 1rem;
-    box-shadow: 0 0 100px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
 }
 
 dialog::backdrop {

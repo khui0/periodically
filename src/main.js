@@ -5,8 +5,8 @@ import "remixicon/fonts/remixicon.css";
 
 import { v4 as uuidv4 } from "uuid";
 import pluralize from "pluralize";
-import * as time from "./time.js";
-import * as ui from "./ui.js";
+import * as time from "./modules/time.js";
+import * as ui from "./modules/ui.js";
 
 let data = JSON.parse(localStorage.getItem("periodically-data")) || [];
 let archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
@@ -217,7 +217,6 @@ function insertAnchors(html) {
     return html;
 }
 
-// TODO: Separate into separate files
 // Show archive modal
 document.getElementById("archive").addEventListener("click", () => {
     ui.show(document.getElementById("archive-modal"), "Archive", [
@@ -288,6 +287,7 @@ function appendArchive(uuid, title, date, details) {
 // Handle dropup
 {
     const dropup = document.getElementById("dropup");
+    const toggle = document.getElementById("toggle-dropup");
     const keyframes = [
         { height: 0 },
         { height: dropup.getBoundingClientRect().height + "px" },
@@ -299,19 +299,87 @@ function appendArchive(uuid, title, date, details) {
     };
     dropup.style.height = 0;
 
-    document.getElementById("toggle-dropup").addEventListener("click", e => {
-        // Open dropup
-        if (dropup.getBoundingClientRect().height == 0) {
-            dropup.animate(keyframes, options);
-            e.target.innerHTML = `<i class="ri-arrow-down-s-line"></i>`;
-        }
-        // Close dropup
-        else {
-            dropup.animate(keyframes, {
-                ...options,
-                direction: "reverse",
-            });
-            e.target.innerHTML = `<i class="ri-arrow-up-s-line"></i>`;
+    // Toggle dropup state
+    toggle.addEventListener("click", () => {
+        dropup.getBoundingClientRect().height == 0 ? open() : close();
+    });
+
+    // Close dropdown by clicking elsewhere
+    document.addEventListener("click", e => {
+        if (
+            !dropup.contains(e.target)
+            && dropup.getBoundingClientRect().height != 0
+            && !document.querySelector("dialog[open]")
+        ) {
+            close();
         }
     });
+
+    function open() {
+        dropup.animate(keyframes, options);
+        toggle.innerHTML = `<i class="ri-arrow-down-s-line"></i>`;
+    }
+
+    function close() {
+        dropup.animate(keyframes, {
+            ...options,
+            direction: "reverse",
+        });
+        toggle.innerHTML = `<i class="ri-arrow-up-s-line"></i>`;
+    }
 }
+
+// Enable transitions
+enableTransitions();
+function enableTransitions() {
+    document.body.offsetHeight;
+    document.body.classList.add("enable-transitions");
+}
+
+// Show settings modal
+document.getElementById("settings").addEventListener("click", () => {
+    ui.show(document.getElementById("settings-modal"), "Settings", [
+        {
+            text: "Close",
+            close: true,
+        }
+    ]);
+});
+
+// Reset data
+document.getElementById("reset-data").addEventListener("click", () => {
+    ui.prompt("Reset data?", "This will permanently remove your saved tasks!", [
+        {
+            text: "Cancel",
+            close: true,
+        },
+        {
+            text: "Reset",
+            close: true,
+            onclick: () => {
+                data = [];
+                localStorage.setItem("periodically-data", "[]");
+                location.reload();
+            },
+        },
+    ]);
+});
+
+// Reset archive
+document.getElementById("reset-archive").addEventListener("click", () => {
+    ui.prompt("Reset archive?", "This will permanently remove your archived tasks!", [
+        {
+            text: "Cancel",
+            close: true,
+        },
+        {
+            text: "Reset",
+            close: true,
+            onclick: () => {
+                archive = [];
+                localStorage.setItem("periodically-archive", "[]");
+                location.reload();
+            },
+        },
+    ]);
+});

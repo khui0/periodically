@@ -17,7 +17,7 @@
     z-index: 1;
     outline: none;
     box-shadow: 0 0 0 0.125rem var(--accent-color);
-    transition: box-shadow 100ms cubic-bezier(0.32, 0, 0.67, 0);
+    transition: box-shadow 100ms var(--easing);
 }
 
 ::placeholder {
