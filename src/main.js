@@ -135,7 +135,7 @@ function addEvents(element) {
         updateStatus();
     });
     // Edit task
-    controls.querySelector("[data-edit]").addEventListener("click", e => {
+    controls.querySelector("[data-edit]").addEventListener("click", () => {
         const task = data.find(item => item.uuid == uuid);
         // Fill fields with task details
         document.getElementById("title").value = task.title;
@@ -167,7 +167,7 @@ function addEvents(element) {
         updateStatus();
     });
     // Delete task
-    controls.querySelector("[data-delete]").addEventListener("click", e => {
+    controls.querySelector("[data-delete]").addEventListener("click", () => {
         // Remove task from data list
         ui.fadeOut(element, 100, () => { element.remove() });
         // Remove item from data array
@@ -219,7 +219,7 @@ function insertAnchors(html) {
 
 // TODO: Separate into separate files
 // Show archive modal
-document.getElementById("archive").addEventListener("click", e => {
+document.getElementById("archive").addEventListener("click", () => {
     ui.show(document.getElementById("archive-modal"), "Archive", [
         {
             text: "Close",
@@ -259,7 +259,7 @@ function appendArchive(uuid, title, date, details) {
         const controls = task.querySelector("div.controls");
         const uuid = task.getAttribute("data-uuid");
         // Restore task
-        controls.querySelector("[data-restore]").addEventListener("click", e => {
+        controls.querySelector("[data-restore]").addEventListener("click", () => {
             const task = archive.find(item => item.uuid == uuid);
             // Remove item from archive array
             archive = archive.filter(item => item.uuid != uuid);
@@ -274,7 +274,7 @@ function appendArchive(uuid, title, date, details) {
             updateStatus();
         });
         // Delete task
-        controls.querySelector("[data-delete]").addEventListener("click", e => {
+        controls.querySelector("[data-delete]").addEventListener("click", () => {
             // Remove task from archive list
             ui.fadeOut(task, 100, () => { task.remove() });
             // Remove item from archive array
@@ -283,4 +283,35 @@ function appendArchive(uuid, title, date, details) {
         });
     }
     return task;
+}
+
+// Handle dropup
+{
+    const dropup = document.getElementById("dropup");
+    const keyframes = [
+        { height: 0 },
+        { height: dropup.getBoundingClientRect().height + "px" },
+    ];
+    const options = {
+        duration: 200,
+        fill: "forwards",
+        easing: "cubic-bezier(0.32, 0, 0.67, 0)",
+    };
+    dropup.style.height = 0;
+
+    document.getElementById("toggle-dropup").addEventListener("click", e => {
+        // Open dropup
+        if (dropup.getBoundingClientRect().height == 0) {
+            dropup.animate(keyframes, options);
+            e.target.innerHTML = `<i class="ri-arrow-down-s-line"></i>`;
+        }
+        // Close dropup
+        else {
+            dropup.animate(keyframes, {
+                ...options,
+                direction: "reverse",
+            });
+            e.target.innerHTML = `<i class="ri-arrow-up-s-line"></i>`;
+        }
+    });
 }
