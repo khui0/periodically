@@ -1,4 +1,4 @@
-// 1.1.1
+// 1.2.0
 
 import "./ui.css";
 
@@ -29,14 +29,16 @@ export function modal(options) {
 
     const buttonContainer = document.createElement("div");
     options.buttons.forEach(button => {
-        buttonContainer.append(
-            new Element("button", button.text, {
-                click: () => {
-                    button.close && dialog.close();
-                    button.onclick && button.onclick();
-                },
-            }).element
-        );
+        const element = new Element("button", button.text, {
+            click: () => {
+                button.close && dialog.close();
+                button.onclick && button.onclick();
+            },
+        }).element;
+        if (button.danger) {
+            element.style.setProperty("--accent-color", "var(--error-color)");
+        }
+        buttonContainer.append(element);
     });
 
     options.title && dialog.append(new Element("h2", options.title).element);
@@ -55,20 +57,21 @@ export function modal(options) {
     return dialog;
 }
 
-// TODO: Clean up function
 export function show(dialog, title, buttons, blur) {
     const titleElement = new Element("h2", title).element;
 
     const buttonContainer = document.createElement("div");
     buttons.forEach(button => {
-        buttonContainer.append(
-            new Element("button", button.text, {
-                click: () => {
-                    button.close && dialog.close();
-                    button.onclick && button.onclick();
-                },
-            }).element
-        );
+        const element = new Element("button", button.text, {
+            click: () => {
+                button.close && dialog.close();
+                button.onclick && button.onclick();
+            },
+        }).element;
+        if (button.danger) {
+            element.style.setProperty("--accent-color", "var(--error-color)");
+        }
+        buttonContainer.append(element);
     });
 
     dialog.open && dialog.close();

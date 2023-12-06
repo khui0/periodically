@@ -168,12 +168,28 @@ function addEvents(element) {
     });
     // Delete task
     controls.querySelector("[data-delete]").addEventListener("click", () => {
-        // Remove task from data list
-        ui.fadeOut(element, 100, () => { element.remove() });
-        // Remove item from data array
-        data = data.filter(item => item.uuid != uuid);
-        localStorage.setItem("periodically-data", JSON.stringify(data));
-        updateStatus();
+        const task = data.find(item => item.uuid == uuid);
+        const title = task.title.substring(0, 64) + (task.title.length > 64 ? "..." : "");
+        ui.prompt(`Delete task?`, `Are you sure you want to delete ${title}?`, [
+            {
+                text: "Cancel",
+                close: true,
+            },
+            {
+                text: "Delete",
+                close: true,
+                onclick: deleteTask,
+                danger: true,
+            },
+        ]);
+        function deleteTask() {
+            // Remove task from data list
+            ui.fadeOut(element, 100, () => { element.remove() });
+            // Remove item from data array
+            data = data.filter(item => item.uuid != uuid);
+            localStorage.setItem("periodically-data", JSON.stringify(data));
+            updateStatus();
+        }
     });
 }
 
@@ -361,6 +377,7 @@ document.getElementById("reset-data").addEventListener("click", () => {
                 localStorage.setItem("periodically-data", "[]");
                 location.reload();
             },
+            danger: true,
         },
     ]);
 });
@@ -380,6 +397,7 @@ document.getElementById("reset-archive").addEventListener("click", () => {
                 localStorage.setItem("periodically-archive", "[]");
                 location.reload();
             },
+            danger: true,
         },
     ]);
 });
