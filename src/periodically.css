@@ -14,11 +14,14 @@ button {
 }
 
 button.icon {
-    width: 2em;
-    height: 2em;
+    width: 2.25em;
+    height: 2.25em;
     padding: 0;
     border-radius: 50%;
-    font-size: 1.125em;
+}
+
+button.icon>i {
+    font-size: 1.25em;
 }
 
 i {
@@ -81,6 +84,9 @@ button[data-delete] {
 }
 
 #bar {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
     position: relative;
     width: 100%;
     margin-top: 1rem;
@@ -92,6 +98,13 @@ button[data-delete] {
     border-radius: 100vh;
 }
 
+#menu {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--surface-color);
+    border-radius: 100vh;
+}
+
 #dropup {
     position: absolute;
     right: 0;
@@ -100,7 +113,9 @@ button[data-delete] {
     flex-direction: column;
     overflow: hidden;
     gap: 0.25rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    background-color: var(--surface-color);
+    border-radius: 100vh;
 }
 
 #dropup * {

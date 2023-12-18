@@ -15,10 +15,9 @@
 <body>
     <h1 id="status"></h1>
     <div class="list" id="data-list"></div>
-    <div class="row" id="bar">
+    <div id="bar">
         <input type="text" placeholder="What do you have to do?" id="create-input">
-        <button class="icon" id="toggle-dropup"><i class="ri-arrow-up-s-line"></i></button>
-        <div id="dropup">
+        <div id="menu">
             <button class="icon" id="archive"><i class="ri-archive-fill"></i></button>
             <button class="icon" id="settings"><i class="ri-settings-3-fill"></i></button>
         </div>
@@ -41,8 +40,8 @@
         <div class="list" id="archive-list"></div>
     </dialog>
     <dialog id="settings-modal">
-        <button id="reset-data">Reset Data</button>
-        <button id="reset-archive">Reset Archive</button>
+        <button id="reset-data">Clear Data</button>
+        <button id="reset-archive">Clear Archive</button>
     </dialog>
     <script type="module" src="src/main.js"></script>
 </body>

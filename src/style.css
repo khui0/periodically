@@ -90,26 +90,6 @@ textarea {
     }
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-    gap: 0.25rem;
-    width: fit-content;
-    flex-wrap: wrap;
-}
-
-.col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 /* GoGuardian */
 
 [data-gg-chat-anchor],

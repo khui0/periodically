@@ -206,6 +206,7 @@ function updateTasks() {
 function updateStatus() {
     const status = document.getElementById("status");
     status.textContent = `${pluralize("task", data.length, true)} remaining`;
+    document.title = `Periodically - ${data.length} tasks`;
 }
 
 // Update past due tasks
@@ -301,49 +302,49 @@ function appendArchive(uuid, title, date, details) {
 }
 
 // Handle dropup
-{
-    const dropup = document.getElementById("dropup");
-    const toggle = document.getElementById("toggle-dropup");
-    const keyframes = [
-        { height: 0 },
-        { height: dropup.getBoundingClientRect().height + "px" },
-    ];
-    const options = {
-        duration: 200,
-        fill: "forwards",
-        easing: "cubic-bezier(0.32, 0, 0.67, 0)",
-    };
-    dropup.style.height = 0;
+// {
+//     const dropup = document.getElementById("dropup");
+//     const toggle = document.getElementById("toggle-dropup");
+//     const keyframes = [
+//         { height: 0 },
+//         { height: dropup.getBoundingClientRect().height + "px" },
+//     ];
+//     const options = {
+//         duration: 200,
+//         fill: "forwards",
+//         easing: "cubic-bezier(0.32, 0, 0.67, 0)",
+//     };
+//     dropup.style.height = 0;
 
-    // Toggle dropup state
-    toggle.addEventListener("click", () => {
-        dropup.getBoundingClientRect().height == 0 ? open() : close();
-    });
+//     // Toggle dropup state
+//     toggle.addEventListener("click", () => {
+//         dropup.getBoundingClientRect().height == 0 ? open() : close();
+//     });
 
-    // Close dropdown by clicking elsewhere
-    document.addEventListener("click", e => {
-        if (
-            !dropup.contains(e.target)
-            && dropup.getBoundingClientRect().height != 0
-            && !document.querySelector("dialog[open]")
-        ) {
-            close();
-        }
-    });
+//     // Close dropdown by clicking elsewhere
+//     document.addEventListener("click", e => {
+//         if (
+//             !dropup.contains(e.target)
+//             && dropup.getBoundingClientRect().height != 0
+//             && !document.querySelector("dialog[open]")
+//         ) {
+//             close();
+//         }
+//     });
 
-    function open() {
-        dropup.animate(keyframes, options);
-        toggle.innerHTML = `<i class="ri-arrow-down-s-line"></i>`;
-    }
+//     function open() {
+//         dropup.animate(keyframes, options);
+//         toggle.innerHTML = `<i class="ri-arrow-down-s-line"></i>`;
+//     }
 
-    function close() {
-        dropup.animate(keyframes, {
-            ...options,
-            direction: "reverse",
-        });
-        toggle.innerHTML = `<i class="ri-arrow-up-s-line"></i>`;
-    }
-}
+//     function close() {
+//         dropup.animate(keyframes, {
+//             ...options,
+//             direction: "reverse",
+//         });
+//         toggle.innerHTML = `<i class="ri-arrow-up-s-line"></i>`;
+//     }
+// }
 
 // Enable transitions
 enableTransitions();
@@ -362,15 +363,15 @@ document.getElementById("settings").addEventListener("click", () => {
     ]);
 });
 
-// Reset data
+// Clear data
 document.getElementById("reset-data").addEventListener("click", () => {
-    ui.prompt("Reset data?", "This will permanently remove your saved tasks!", [
+    ui.prompt("Clear data?", "This will permanently remove your saved tasks!", [
         {
             text: "Cancel",
             close: true,
         },
         {
-            text: "Reset",
+            text: "Clear",
             close: true,
             onclick: () => {
                 data = [];
@@ -382,15 +383,15 @@ document.getElementById("reset-data").addEventListener("click", () => {
     ]);
 });
 
-// Reset archive
+// Clear archive
 document.getElementById("reset-archive").addEventListener("click", () => {
-    ui.prompt("Reset archive?", "This will permanently remove your archived tasks!", [
+    ui.prompt("Clear archive?", "This will permanently remove your archived tasks!", [
         {
             text: "Cancel",
             close: true,
         },
         {
-            text: "Reset",
+            text: "Clear",
             close: true,
             onclick: () => {
                 archive = [];
