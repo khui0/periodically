@@ -251,7 +251,7 @@ function updateArchive() {
     list.innerHTML = "";
     for (let i = 0; i < archive.length; i++) {
         const item = archive[i];
-        appendArchive(item.uuid, item.title, time.timeToString(item.timestamp), item.details);
+        item && appendArchive(item.uuid, item.title, time.timeToString(item.timestamp), item.details);
     }
 }
 
@@ -267,7 +267,7 @@ function appendArchive(uuid, title, date, details) {
     <button class="icon" data-restore><i class="ri-arrow-go-back-fill"></i></button>
     <button class="icon" data-delete><i class="ri-delete-bin-6-fill"></i></button>
 </div>`;
-    list.append(task);
+    list.prepend(task);
     // Add events
     {
         ui.addHover(task);
