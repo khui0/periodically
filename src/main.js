@@ -206,7 +206,7 @@ function updateTasks() {
 function updateStatus() {
     const status = document.getElementById("status");
     status.textContent = `${pluralize("task", data.length, true)} remaining`;
-    document.title = `Periodically - ${data.length} tasks`;
+    document.title = `Periodically - ${pluralize("task", data.length, true)}`;
 }
 
 // Update past due tasks
