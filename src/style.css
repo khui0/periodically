@@ -1,4 +1,14 @@
 :root {
+    color-scheme: light;
+    --text-color: #202020;
+    --background-color: #ffffff;
+    --surface-color: #e6e6e6;
+    --accent-color: #059fff;
+    --accent-text-color: #202020;
+    --error-color: #e23c52;
+}
+
+.theme-dark {
     color-scheme: dark;
     --text-color: #ffffff;
     --background-color: #161616;
