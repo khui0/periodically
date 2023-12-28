@@ -71,6 +71,23 @@ i {
     pointer-events: auto;
 }
 
+.list.fill,
+.list.outline {
+    gap: 0.5rem;
+}
+
+.list.fill>div {
+    background-color: var(--surface-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.list.outline>div {
+    padding: 0.25rem 0.5rem;
+    border: 0.125rem solid var(--surface-color);
+    border-radius: 0.5rem;
+}
+
 button[data-delete] {
     --accent-color: var(--error-color);
 }
@@ -103,4 +120,11 @@ button[data-delete] {
     flex-direction: row;
     background-color: var(--surface-color);
     border-radius: 100vh;
+}
+
+div.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
 }

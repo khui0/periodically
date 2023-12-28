@@ -16,8 +16,6 @@ let archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
 updateTasks();
 setInterval(updatePastDue, 100);
 
-enableTransitions();
-
 // Keyboard shortcuts
 document.addEventListener("keydown", e => {
     if (document.activeElement == document.body) {

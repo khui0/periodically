@@ -40,14 +40,24 @@
         <div class="list" id="archive-list"></div>
     </dialog>
     <dialog id="settings-modal">
-        <label>
-            Theme
-            <select data-sync="theme">
-                <option value="auto">Auto</option>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
-        </label>
+        <div class="settings-grid">
+            <label>
+                Theme
+                <select data-sync="theme">
+                    <option value="auto">Auto</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </label>
+            <label>
+                Background
+                <select data-sync="background">
+                    <option value="default">None</option>
+                    <option value="fill">Filled</option>
+                    <option value="outline">Outline</option>
+                </select>
+            </label>
+        </div>
         <button id="reset-tasks">Clear Tasks</button>
         <button id="reset-archive">Clear Archive</button>
     </dialog>

@@ -1,10 +1,16 @@
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateTheme);
-document.addEventListener("settingchange", updateTheme);
+document.addEventListener("settingchange", update);
 
-updateTheme();
+update();
+
+function update() {
+    disableTransitions();
+    updateTheme();
+    updateBackground();
+    enableTransitions();
+}
 
 function updateTheme() {
-    disableTransitions();
     const theme = localStorage.getItem("periodically-theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     switch (theme) {
@@ -20,7 +26,24 @@ function updateTheme() {
             prefersDark ? document.body.classList.add("theme-dark") : document.body.classList.remove("theme-dark");
         }
     }
-    enableTransitions();
+}
+
+function updateBackground() {
+    const style = localStorage.getItem("periodically-background") || "default";
+    document.querySelectorAll(".list").forEach(list => {
+        list.classList.remove("fill");
+        list.classList.remove("outline");
+        switch (style) {
+            case "fill": {
+                list.classList.add("fill");
+                break;
+            }
+            case "outline": {
+                list.classList.add("outline");
+                break;
+            }
+        }
+    });
 }
 
 export function enableTransitions() {
