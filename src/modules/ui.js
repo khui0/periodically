@@ -48,7 +48,11 @@ export function modal(options) {
     document.body.append(dialog);
     dialog.showModal();
 
-    options.blur && buttonContainer.querySelectorAll("button").forEach(button => button.blur());
+    if (options.blur) {
+        buttonContainer.querySelectorAll("button").forEach(button => button.blur());
+    } else {
+        buttonContainer.querySelector("button").focus();
+    }
 
     dialog.addEventListener("close", () => {
         dialog.remove();
@@ -81,7 +85,11 @@ export function show(dialog, title, buttons, blur) {
 
     dialog.showModal();
 
-    blur && buttonContainer.querySelectorAll("button").forEach(button => button.blur());
+    if (blur) {
+        buttonContainer.querySelectorAll("button").forEach(button => button.blur())
+    } else {
+        buttonContainer.querySelector("button").focus();
+    }
 
     dialog.addEventListener("close", () => {
         titleElement.remove();
