@@ -129,9 +129,9 @@ function appendTask(index, uuid, title, date, details) {
 <p data-date>${date}</p>
 <p>${details && insertAnchors(details)}</p>
 <div class="controls">
-    <button class="icon" data-complete><i class="ri-check-fill"></i></button>
-    <button class="icon" data-edit><i class="ri-pencil-fill"></i></button>
-    <button class="icon" data-delete><i class="ri-delete-bin-6-fill"></i></button>
+    <button class="icon" data-complete><i class="ri-check-line"></i></button>
+    <button class="icon" data-edit><i class="ri-edit-line"></i></button>
+    <button class="icon" data-delete><i class="ri-delete-bin-2-line"></i></button>
 </div>`;
     list.insertBefore(task, list.childNodes[index]);
     addEvents(task);
