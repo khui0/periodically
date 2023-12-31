@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import pluralize from "pluralize";
 import * as time from "./modules/time.js";
 import * as ui from "./modules/ui.js";
-import { enableTransitions } from "./modules/theme.js";
+import "./modules/theme.js";
 import "./modules/settings.js";
 
 let data = JSON.parse(localStorage.getItem("periodically-data")) || [];
@@ -15,6 +15,26 @@ let archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
 
 updateTasks();
 setInterval(updatePastDue, 100);
+
+document.getElementById("details").addEventListener("input", updateDetailsHeight);
+
+// Automatically fit details textarea to lines
+function updateDetailsHeight() {
+    const element = document.getElementById("details");
+    const minHeight = linesToPx(document.getElementById("details"), 3);
+    const maxHeight = linesToPx(document.getElementById("details"), 10);
+    element.style.height = 0;
+    element.style.height = Math.min(Math.max(element.scrollHeight, minHeight), maxHeight) + "px";
+}
+
+// Calculate height of element required to fit a number of lines
+function linesToPx(element, lines) {
+    const styles = window.getComputedStyle(element);
+    const paddingTop = parseFloat(styles.paddingTop);
+    const paddingBottom = parseFloat(styles.paddingBottom);
+    const lineHeight = parseFloat(styles.lineHeight);
+    return (lines * lineHeight) + paddingTop + paddingBottom;
+}
 
 // Keyboard shortcuts
 document.addEventListener("keydown", e => {
@@ -167,6 +187,7 @@ function addEvents(element) {
             },
         ]);
         updateStatus();
+        updateDetailsHeight();
     });
     // Delete task
     controls.querySelector("[data-delete]").addEventListener("click", () => {
