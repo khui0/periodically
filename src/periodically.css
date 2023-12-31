@@ -44,10 +44,23 @@ i {
     width: 100%;
 }
 
+.list>div>h2 {
+    font-weight: normal;
+}
+
+.list.bold>div>h2 {
+    font-weight: bold;
+}
+
 .list>div>p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    max-height: calc(3 * 1.5em);
+}
+
+.list.multiline>div>p {
+    white-space: pre;
 }
 
 .list>div>.controls {
