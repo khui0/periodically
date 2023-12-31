@@ -5,6 +5,8 @@ import "remixicon/fonts/remixicon.css";
 
 import { v4 as uuidv4 } from "uuid";
 import pluralize from "pluralize";
+import html2canvas from "html2canvas";
+
 import * as time from "./modules/time.js";
 import * as ui from "./modules/ui.js";
 import "./modules/theme.js";
@@ -256,6 +258,33 @@ function insertAnchors(html) {
     }
     return html;
 }
+
+// Show share modal
+document.getElementById("share").addEventListener("click", () => {
+    const output = document.getElementById("screenshot-output");
+    const element = document.getElementById("data-list").cloneNode(true);
+    element.removeAttribute("id");
+    element.classList.add("screenshot-mode");
+    document.body.append(element);
+
+    const height = element.getBoundingClientRect().height;
+
+    html2canvas(element, {
+        scale: 1,
+        height: Math.floor(height),
+    }).then(canvas => {
+        output.src = canvas.toDataURL();
+    });
+
+    element.remove();
+
+    ui.show(document.getElementById("share-modal"), "Share", [
+        {
+            text: "Close",
+            close: true,
+        },
+    ]);
+});
 
 // Show archive modal
 document.getElementById("archive").addEventListener("click", () => {

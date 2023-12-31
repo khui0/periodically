@@ -131,3 +131,9 @@ textarea {
 ::-webkit-scrollbar-corner {
     background-color: var(--background-color);
 }
+
+/* html2canvas */
+
+body>div:last-child img {
+    display: inline-block;
+}

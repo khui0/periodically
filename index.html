@@ -18,8 +18,9 @@
     <div id="bar">
         <input type="text" placeholder="What do you have to do?" id="create-input">
         <div id="menu">
-            <button class="icon" id="archive"><i class="ri-archive-fill"></i></button>
-            <button class="icon" id="settings"><i class="ri-settings-3-fill"></i></button>
+            <button class="icon" id="share"><i class="ri-share-2-line"></i></button>
+            <button class="icon" id="archive"><i class="ri-archive-line"></i></button>
+            <button class="icon" id="settings"><i class="ri-settings-3-line"></i></button>
         </div>
     </div>
     <dialog id="create-modal">
@@ -35,6 +36,13 @@
             Date
             <input type="datetime-local" id="date">
         </label>
+    </dialog>
+    <dialog id="share-modal">
+        <img alt="screenshot output" id="screenshot-output">
+        <div id="screenshot-options">
+            <button id="screenshot-download">Download</button>
+            <button id="screenshot-copy">Copy</button>
+        </div>
     </dialog>
     <dialog id="archive-modal">
         <div class="list" id="archive-list"></div>

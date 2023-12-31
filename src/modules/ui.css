@@ -23,4 +23,5 @@ dialog>div:last-of-type {
     gap: 0.25rem;
     justify-content: flex-end;
     padding-top: 0.5rem;
+    background-color: transparent;
 }

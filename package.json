@@ -13,8 +13,10 @@
     "vite-plugin-webfont-dl": "^3.7.6"
   },
   "dependencies": {
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
     "pluralize": "^8.0.0",
-    "remixicon": "^3.5.0",
+    "remixicon": "^4.0.1",
     "uuid": "^9.0.1"
   }
 }
