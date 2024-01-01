@@ -341,8 +341,8 @@ function appendArchive(uuid, title, date, details) {
 <p>${date}</p>
 <p>${details}</p>
 <div class="controls">
-    <button class="icon" data-restore><i class="ri-arrow-go-back-fill"></i></button>
-    <button class="icon" data-delete><i class="ri-delete-bin-6-fill"></i></button>
+    <button class="icon" data-restore><i class="ri-arrow-go-back-line"></i></button>
+    <button class="icon" data-delete><i class="ri-delete-bin-2-line"></i></button>
 </div>`;
     list.prepend(task);
     // Add events
