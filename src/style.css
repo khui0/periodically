@@ -1,6 +1,7 @@
 :root {
     color-scheme: light;
     --text-color: #3a3a3a;
+    --placeholder-text-color: hsl(0, 0%, 50%);
     --background-color: #ffffff;
     --surface-color: #e6e6e6;
     --accent-color: #059fff;
@@ -24,15 +25,12 @@
 }
 
 :focus-visible {
-    z-index: 1;
-    outline: none;
-    box-shadow: 0 0 0 0.125rem var(--accent-color);
-    transition: box-shadow 100ms var(--easing);
+    outline: 0.125rem solid var(--accent-color);
+    outline-offset: -0.125rem;
 }
 
 ::placeholder {
-    color: var(--text-color);
-    opacity: 0.5;
+    color: var(--placeholder-text-color);
 }
 
 body {
