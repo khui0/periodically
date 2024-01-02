@@ -52,6 +52,7 @@ i {
 }
 
 .list>div>h2 {
+    background-color: transparent;
     font-weight: normal;
 }
 
@@ -60,6 +61,7 @@ i {
 }
 
 .list>div>p {
+    background-color: transparent;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
