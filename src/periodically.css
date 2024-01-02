@@ -68,6 +68,10 @@ i {
     max-height: calc(3 * 1.5em);
 }
 
+.list>div>p[data-date] {
+    color: var(--placeholder-text-color);
+}
+
 .list.multiline>div>p {
     white-space: pre;
 }

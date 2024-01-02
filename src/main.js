@@ -18,6 +18,8 @@ let archive = JSON.parse(localStorage.getItem("periodically-archive")) || [];
 
 updateTasks();
 setInterval(updatePastDue, 100);
+updateClock();
+setInterval(updateClock, 100);
 
 document.getElementById("details").addEventListener("input", updateDetailsHeight);
 
@@ -235,13 +237,14 @@ function updateStatus() {
     document.title = `Periodically - ${pluralize("task", data.length, true)}`;
 }
 
-setInterval(() => {
+// Update clock
+function updateClock() {
     const time = new Date().toLocaleTimeString([], {
         hour: "numeric",
         minute: "2-digit",
     });
     document.getElementById("time").textContent = time;
-}, 100);
+}
 
 // Update past due tasks
 function updatePastDue() {
