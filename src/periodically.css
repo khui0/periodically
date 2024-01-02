@@ -114,15 +114,26 @@ button[data-delete] {
     --accent-color: var(--error-color);
 }
 
-#status {
+#status-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin-bottom: 1rem;
 }
 
-#data-list {
+#status {
+    font-weight: normal;
+}
+
+#time {
+    font-weight: normal;
+}
+
+#task-list {
     flex: 1;
 }
 
-#bar {
+#bottom-bar {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;

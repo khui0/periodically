@@ -125,7 +125,7 @@ function setTask(title, details, timestamp, uuid) {
 
 // Append task to data list
 function appendTask(index, uuid, title, date, details) {
-    const list = document.getElementById("data-list");
+    const list = document.getElementById("task-list");
     const task = document.createElement("div");
     task.setAttribute("data-uuid", uuid);
     task.innerHTML = `<h2>${title}</h2>
@@ -231,9 +231,17 @@ function updateTasks() {
 // Update status to show remaining tasks
 function updateStatus() {
     const status = document.getElementById("status");
-    status.textContent = `${pluralize("task", data.length, true)} remaining`;
+    status.textContent = pluralize("task", data.length, true);
     document.title = `Periodically - ${pluralize("task", data.length, true)}`;
 }
+
+setInterval(() => {
+    const time = new Date().toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit",
+    });
+    document.getElementById("time").textContent = time;
+}, 100);
 
 // Update past due tasks
 function updatePastDue() {
@@ -265,7 +273,7 @@ let screenshot;
 // Show share modal
 document.getElementById("share").addEventListener("click", () => {
     const output = document.getElementById("screenshot-output");
-    const element = document.getElementById("data-list").cloneNode(true);
+    const element = document.getElementById("task-list").cloneNode(true);
     element.removeAttribute("id");
     element.classList.add("screenshot-mode");
     document.body.append(element);
