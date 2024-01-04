@@ -68,7 +68,7 @@ i {
     max-height: calc(3 * 1.5em);
 }
 
-.list>div>p[data-date] {
+.list>div>p[data-date]:not(.warning) {
     color: var(--placeholder-text-color);
 }
 
