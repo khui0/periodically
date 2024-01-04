@@ -76,6 +76,10 @@ i {
     white-space: pre-wrap;
 }
 
+.list.multiline.screenshot-mode>div>p {
+    max-height: unset;
+}
+
 .list>div>.controls {
     position: absolute;
     top: 0;
