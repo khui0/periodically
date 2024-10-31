@@ -1,3 +1,29 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    --rounded-box: 1.25rem;
+    --rounded-btn: 0.75rem;
+    --rounded-badge: 0.75rem;
+    --animation-btn: 0.25s;
+    --animation-input: 0.2s;
+    --btn-focus-scale: 0.95;
+    --border-btn: 0;
+    --tab-border: 0;
+    --tab-radius: 0;
+  }
+}
+
+@layer utilities {
+  .btn {
+    @apply shadow-none;
+  }
+
+  .btn-ghost:hover {
+    @apply bg-base-200
+  }
+}

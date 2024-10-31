@@ -11,3 +11,5 @@ declare global {
 }
 
 export {};
+
+import "unplugin-icons/types/svelte";
