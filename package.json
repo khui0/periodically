@@ -17,6 +17,6 @@
     "html2canvas": "^1.4.1",
     "pluralize": "^8.0.0",
     "remixicon": "^4.0.1",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   }
 }
